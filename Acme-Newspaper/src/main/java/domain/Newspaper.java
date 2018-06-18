@@ -110,7 +110,17 @@ public class Newspaper extends DomainEntity {
 	private Collection<Subscribe>		subscribes;
 	private Collection<Volume>			volumes;
 	private Collection<Advertisement>	advertisements;
+	private Collection<Comodin>			comodines;
 
+
+	@OneToMany(mappedBy = "newspaper")
+	public Collection<Comodin> getComodines() {
+		return this.comodines;
+	}
+
+	public void setComodines(final Collection<Comodin> comodines) {
+		this.comodines = comodines;
+	}
 
 	@Valid
 	@ManyToMany()

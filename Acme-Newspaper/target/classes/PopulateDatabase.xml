@@ -50,6 +50,18 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="adminAccount2" class="security.UserAccount">
+		<property name="username" value="admin2" />
+		<property name="password" value="c84258e9c39059a89ab77d846ddab909" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="user1" />
@@ -179,6 +191,24 @@
 		<property name="phone" value="693448959" />
 		<property name="postalAddress" value="666 Rosebud Avenue" />
 		<property name="userAccount" ref="adminAccount" />
+		<property name="messagesSents">
+			<list></list>
+		</property>
+		<property name="messagesReceiveds">
+			<list></list>
+		</property>
+		<property name="folders">
+			<list></list>
+		</property>
+	</bean>
+	
+	<bean id="admin2" class="domain.Administrator">
+		<property name="name" value="Rafael" />
+		<property name="surname" value="Molares" />
+		<property name="email" value="rafi_rmd9@hotmail.com" />
+		<property name="phone" value="693458959" />
+		<property name="postalAddress" value="Calle de la Nostalgia" />
+		<property name="userAccount" ref="adminAccount2" />
 		<property name="messagesSents">
 			<list></list>
 		</property>
@@ -2128,6 +2158,51 @@
 			<list></list>
 		</property>
 	</bean>
+	
+		<bean id="in_box11" class="domain.Folder">
+		<property name="name" value="in box" />
+		<property name="modifiable" value="false" />
+		<property name="actor" ref="admin2" />
+		<property name="mesages">
+			<list></list>
+		</property>
+	</bean>
+
+	<bean id="out_box11" class="domain.Folder">
+		<property name="name" value="out box" />
+		<property name="modifiable" value="false" />
+		<property name="actor" ref="admin2" />
+		<property name="mesages">
+			<list></list>
+		</property>
+	</bean>
+
+	<bean id="trash_box11" class="domain.Folder">
+		<property name="name" value="trash box" />
+		<property name="modifiable" value="false" />
+		<property name="actor" ref="admin2" />
+		<property name="mesages">
+			<list></list>
+		</property>
+	</bean>
+
+	<bean id="spam_box11" class="domain.Folder">
+		<property name="name" value="spam box" />
+		<property name="modifiable" value="false" />
+		<property name="actor" ref="admin2" />
+		<property name="mesages">
+			<list></list>
+		</property>
+	</bean>
+
+	<bean id="notification_box11" class="domain.Folder">
+		<property name="name" value="notification box" />
+		<property name="modifiable" value="false" />
+		<property name="actor" ref="admin2" />
+		<property name="mesages">
+			<list></list>
+		</property>
+	</bean>
 
 	<!-- #Messages -->
 	<bean id="message1" class="domain.Mesage">
@@ -2209,6 +2284,93 @@
 		<property name="agent" ref="agent3" />
 		<property name="newspaper" ref="newspaper1" />
 	</bean>
+
+<!-- #Entidad nueva -->
+
+<!-- Entidad ya asociado con un viaje, publicada y en final mode -->
+<bean id="comodin1" class="domain.Comodin">
+	<property name="ticker" value="180601:ABCDEF"/>
+	<property name="gauge" value="1"/>
+	<property name="moment">
+			<bean factory-bean="date" factory-method="parse">
+				<constructor-arg value="01/06/2018" />
+			</bean>
+	</property>	
+	<property name="shortTitle" value="short Title 1"/>
+	<property name="description" value="description 1"/>
+	<property name="finalMode" value="true"/>
+	<property name="newspaper" ref="newspaper1"/>
+	<property name="administrator" ref="admin"/>
+	
+</bean>
+
+<!-- Entidad ya asociado con un viaje, no publicada y en final mode-->
+<bean id="comodin2" class="domain.Comodin">
+	<property name="ticker" value="180602:GHIJKL"/>
+	<property name="gauge" value="2"/>
+	<property name="moment">
+			<bean factory-bean="date" factory-method="parse">
+				<constructor-arg value="10/10/2018" />
+			</bean>
+	</property>	
+	<property name="shortTitle" value="short Title 2"/>
+	<property name="description" value="description 2"/>
+	<property name="finalMode" value="true"/>
+	<property name="administrator" ref="admin"/>
+	<property name="newspaper" ref="newspaper1"/>
+	
+</bean>
+
+<!-- Entidad no asociado con un viaje, publicada y en final mode-->
+
+<bean id="comodin3" class="domain.Comodin">
+	<property name="ticker" value="180605:ABEDEF"/>
+	<property name="gauge" value="1"/>
+	<property name="moment">
+			<bean factory-bean="date" factory-method="parse">
+				<constructor-arg value="01/06/2018" />
+			</bean>
+	</property>	
+	<property name="shortTitle" value="short Title 3"/>
+	<property name="description" value="description 3"/>
+	<property name="finalMode" value="true"/>
+	<property name="administrator" ref="admin"/>
+	
+</bean>
+
+<!-- Entidad no asociado con un viaje, no publicada y NO final mode-->
+<bean id="comodin4" class="domain.Comodin">
+	<property name="ticker" value="180510:ASHEIW"/>
+	<property name="gauge" value="3"/>
+	<property name="moment">
+			<bean factory-bean="date" factory-method="parse">
+				<constructor-arg value="10/12/2018" />
+			</bean>
+	</property>	
+	<property name="shortTitle" value="short Title 4"/>
+	<property name="description" value="description 4"/>
+	<property name="finalMode" value="false"/>
+	<property name="administrator" ref="admin2"/>
+	
+</bean>
+
+
+<!-- Entidad ya asociado con un viaje, publicada y en final mode-->
+<bean id="comodin5" class="domain.Comodin">
+	<property name="ticker" value="180502:GHIJKL"/>
+	<property name="gauge" value="2"/>
+	<property name="moment">
+			<bean factory-bean="date" factory-method="parse">
+				<constructor-arg value="05/05/2018" />
+			</bean>
+	</property>	
+	<property name="shortTitle" value="short Title 5"/>
+	<property name="description" value="description 5"/>
+	<property name="finalMode" value="true"/>
+	<property name="administrator" ref="admin2"/>
+	<property name="newspaper" ref="newspaper1"/>
+</bean>
+
 
 
 
