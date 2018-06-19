@@ -54,6 +54,7 @@ public class Comodin extends DomainEntity {
 		this.gauge = gauge;
 	}
 
+	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getMoment() {
@@ -100,7 +101,6 @@ public class Comodin extends DomainEntity {
 	private Administrator	administrator;
 
 
-	//	@NotNull
 	@Valid
 	@ManyToOne(optional = true)
 	public Newspaper getNewspaper() {

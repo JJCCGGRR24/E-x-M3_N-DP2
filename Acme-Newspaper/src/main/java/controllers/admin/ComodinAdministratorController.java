@@ -111,9 +111,7 @@ public class ComodinAdministratorController extends AbstractController {
 				this.comodinService.delete(c);
 				modelAndView = new ModelAndView("redirect:/comodin/administrator/myList.do");
 			} catch (final Throwable e) {
-				if (e.getMessage().equals("not.principal"))
-					modelAndView = this.createEditModelAndView(c, "not.principal");
-				else if (e.getMessage().equals("in.finalMode"))
+				if (e.getMessage().equals("in.finalMode"))
 					modelAndView = this.createEditModelAndView(c, "in.finalMode");
 				else
 					modelAndView = this.createEditModelAndView(c, "commit.error");
@@ -131,7 +129,8 @@ public class ComodinAdministratorController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(final Comodin n, final String message) {
 		ModelAndView result;
-		Assert.isTrue(n.getAdministrator().getUserAccount() == LoginService.getPrincipal());
+		final Administrator admin = (Administrator) this.loginService.getPrincipalActor();
+		Assert.isTrue(n.getAdministrator() == admin);
 		result = new ModelAndView("comodin/edit");
 		result.addObject("comodines", this.newspaperService.getNotPublishedNewspapers());
 		result.addObject("comodin", n);

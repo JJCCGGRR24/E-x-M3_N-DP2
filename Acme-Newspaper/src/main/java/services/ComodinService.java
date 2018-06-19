@@ -41,8 +41,10 @@ public class ComodinService {
 	// Simple CRUD methods ----------------------------------------------------
 	public Comodin create() {
 		final Comodin r = new Comodin();
-		r.setAdministrator((Administrator) this.loginService.getPrincipalActor());
+		final Administrator admin = (Administrator) this.loginService.getPrincipalActor();
+		r.setAdministrator(admin);
 		r.setTicker(this.generateCode());
+		r.setNewspaper(null);
 		return r;
 	}
 	public Collection<Comodin> findAll() {
@@ -57,7 +59,8 @@ public class ComodinService {
 
 	public Comodin save(final Comodin comodin) {
 		Assert.notNull(comodin);
-		Assert.isTrue(comodin.getAdministrator().getUserAccount() == LoginService.getPrincipal(), "not.principal");
+		final Administrator admin = (Administrator) this.loginService.getPrincipalActor();
+		Assert.isTrue(comodin.getAdministrator() == admin, "not.principal");
 		if (comodin.getId() != 0) {
 			final Comodin bd = this.comodinRepository.findOne(comodin.getId());
 			Assert.isTrue(bd.isFinalMode() == false, "in.finalMode");

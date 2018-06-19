@@ -27,7 +27,11 @@
 	<security:intercept-url pattern="/comodin/list.do"
 			access="permitAll" />
 	<security:intercept-url pattern="/comodin/administrator/edit.do"
-			access="permitAll" />
+			access="hasRole('ADMIN')" />
+	<security:intercept-url pattern="/comodin/administrator/create.do"
+			access="hasRole('ADMIN')" />
+	<security:intercept-url pattern="/comodin/administrator/myList.do"
+			access="hasRole('ADMIN')" />		
 
 		<security:intercept-url pattern="/law/**"
 			access="permitAll" />

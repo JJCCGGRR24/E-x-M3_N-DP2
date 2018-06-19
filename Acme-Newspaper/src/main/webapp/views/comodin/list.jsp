@@ -11,19 +11,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
-<script>
-	function preguntar(rendezvousId) {
-		eliminar = confirm('<spring:message code="newspaper.confirmDelete"/>');
-		if (eliminar)
-			//Redireccionamos si das a aceptar
-			window.location.href = "article/admin/delete.do?articleId=" + rendezvousId; //página web a la que te redirecciona si confirmas la eliminación
-		else
-			//Y aquí pon cualquier cosa que quieras que salga si le diste al boton de cancelar
-			alert('<spring:message code="newspaper.negativeDelete"/>');
-	}
-	
-	
-</script>
+<security:authorize access="hasRole('ADMIN')">
+<input type="button" name="template.create" value="<spring:message code="template.create"/>" onclick="javascript:relativeRedir('comodin/administrator/create.do')" />
+</security:authorize>
+
 
 <display:table name="comodines" id="row" requestURI="${requestURI}"
 	pagesize="7" class="displaytag" sort="list" defaultsort="1" defaultorder="descending">
