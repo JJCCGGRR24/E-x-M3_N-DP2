@@ -28,6 +28,7 @@
 		<form:hidden path="subscribes" />
 		<form:hidden path="volumes" />
 		<form:hidden path="advertisements" />
+		<form:hidden path="comodines" />
 
 	<acme:textbox code="chirp.title" path="title" size="100"/><br>
 	<acme:textbox code="general.picture" path="picture" size="100"/><br>

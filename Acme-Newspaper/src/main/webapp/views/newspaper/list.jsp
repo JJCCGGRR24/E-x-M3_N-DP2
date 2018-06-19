@@ -114,6 +114,16 @@
 	</display:column>
 	</security:authorize>
 	
+	<display:column titleKey="newspaper.comodines">
+	<jstl:if test="${not empty row.comodines}">
+		<spring:url value="/comodin/list.do" var="editURL">
+		<spring:param name="newspaperId" value="${row.id}"></spring:param>
+		</spring:url>
+		
+		<a href="${editURL}"> <spring:message code="template.see"/></a>
+		</jstl:if>
+	</display:column>
+	
 	<security:authorize access="hasRole('ADMIN')">
 	<display:column>
 			<a href="javascript:preguntar(${row.id})"><spring:message

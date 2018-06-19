@@ -16,6 +16,7 @@ import repositories.NewspaperRepository;
 import security.LoginService;
 import domain.Advertisement;
 import domain.Article;
+import domain.Comodin;
 import domain.Customer;
 import domain.Newspaper;
 import domain.Subscribe;
@@ -61,6 +62,8 @@ public class NewspaperService {
 		r.setAdvertisements(advers);
 		final List<Volume> volumes = new ArrayList<>();
 		r.setVolumes(volumes);
+		final List<Comodin> comodines = new ArrayList<>();
+		r.setComodines(comodines);
 		r.setTabooWord(false);
 		final User user = this.userService.findByPrincipal();
 		r.setUser(user);
