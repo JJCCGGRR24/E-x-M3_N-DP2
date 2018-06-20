@@ -32,6 +32,9 @@
 
 	
 	<input type="submit" name="save" value="<spring:message code="template.save"/>" />
+	<jstl:if test="${!(comodin.id eq 0)}">
+		<input type="submit" name="delete" value="<spring:message code="template.delete"/>" />
+	</jstl:if>
 	<input type="button" name="cancel" value="<spring:message code="template.cancel"/>" 
 	onclick="javascript: relativeRedir('/comodin/administrator/myList.do');"/>
 </jstl:if>
@@ -64,9 +67,7 @@
 	<br /><br>
 	
 	<input type="submit" name="save" value="<spring:message code="template.save"/>" />
-	<jstl:if test="${!(comodin.id eq 0)}">
-		<input type="submit" name="delete" value="<spring:message code="template.delete"/>" />
-	</jstl:if>
+	
 	<input type="button" name="cancel" value="<spring:message code="template.cancel"/>" 
 	onclick="javascript: relativeRedir('/comodin/administrator/myList.do');"/>
 </jstl:if>
