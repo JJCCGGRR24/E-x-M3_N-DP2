@@ -1,6 +1,7 @@
 
 package services;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Random;
@@ -59,11 +60,23 @@ public class ComodinService {
 
 	public Comodin save(final Comodin comodin) {
 		Assert.notNull(comodin);
-		final Administrator admin = (Administrator) this.loginService.getPrincipalActor();
-		Assert.isTrue(comodin.getAdministrator() == admin, "not.principal");
-		if (comodin.getId() != 0) {
-			final Comodin bd = this.comodinRepository.findOne(comodin.getId());
-			Assert.isTrue(bd.isFinalMode() == false, "in.finalMode");
+
+		final Comodin bd = this.comodinRepository.findOne(comodin.getId());
+
+		if (comodin.getId() != 0 && bd.isFinalMode()) {
+			Assert.isTrue(bd.getNewspaper() == null, "yet.asociated");
+			bd.setNewspaper(comodin.getNewspaper());
+			final Timestamp stamp = (Timestamp) bd.getMoment();
+			final Date date = new Date(stamp.getTime());
+			bd.setMoment(date);
+			Assert.isTrue(bd.getMoment().equals(comodin.getMoment()));
+			Assert.isTrue(bd.equals(comodin), "in.finalMode");
+		}
+		if (comodin.isFinalMode() == false) {
+			final Date actual = new Date();
+			Assert.isTrue(comodin.getMoment().after(actual), "moment.before");
+			Assert.isTrue(comodin.getNewspaper() == null, "necessary.finalMode");
+
 		}
 		return this.comodinRepository.save(comodin);
 	}
@@ -104,8 +117,9 @@ public class ComodinService {
 		return new String(text);
 	}
 
-	public Collection<Comodin> comodinFinalMode(final Newspaper newspaper) {
-		return this.comodinRepository.comodinFinalMode(newspaper);
+	public Collection<Comodin> comodinFinalModeMomentAfter(final Newspaper newspaper) {
+		final Date actual = new Date();
+		return this.comodinRepository.comodinFinalModeMomentAfter(newspaper, actual);
 	}
 
 }

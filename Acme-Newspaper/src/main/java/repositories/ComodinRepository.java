@@ -2,6 +2,7 @@
 package repositories;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,7 +14,7 @@ import domain.Newspaper;
 @Repository
 public interface ComodinRepository extends JpaRepository<Comodin, Integer> {
 
-	@Query("select c from Comodin c where c.finalMode = true and c.newspaper = ?1")
-	Collection<Comodin> comodinFinalMode(Newspaper newspaper);
+	@Query("select c from Comodin c where c.finalMode = true and c.newspaper = ?1 and c.moment > ?2")
+	Collection<Comodin> comodinFinalModeMomentAfter(Newspaper newspaper, Date actual);
 
 }

@@ -17,7 +17,7 @@
 
 
 <display:table name="comodines" id="row" requestURI="${requestURI}"
-	pagesize="7" class="displaytag" sort="list" defaultsort="1" defaultorder="descending">
+	pagesize="2" class="displaytag" sort="list" defaultsort="1" defaultorder="descending">
 
 <acme:column code="comodin.ticker" property="ticker"/>
 
@@ -49,7 +49,22 @@
 <acme:column code="comodin.shortTitle" property="shortTitle"/>
 <acme:column code="comodin.description" property="description"/>
 
+<display:column>
+<security:authentication property="principal" var="userAccount"/>
+	<spring:url value="comodin/administrator/edit.do" var="editURL">
+		<spring:param name="comodinId" value="${row.id}"></spring:param>
+	</spring:url>
+	
+	<jstl:if test="${(row.administrator.userAccount eq userAccount) and (row.finalMode == false)}">	
+	<a href="${editURL}"><spring:message code="template.edit"/></a>
+	</jstl:if>
+
+	<jstl:if test="${(row.administrator.userAccount eq userAccount) and (row.finalMode eq true) and (row.newspaper == null)}">	
+	<a href="${editURL}"><spring:message code="template.associate"/></a>
+	</jstl:if>
+</display:column>
+
 </display:table>
 
 
-<input type="button" name="back" onclick="javascriptRedir('/newspaper/list.do')"  value="<spring:message code="general.back"/>"/>
+<input type="button" name="back" onclick="javascript:relativeRedir('/newspaper/list.do')"  value="<spring:message code="general.back"/>"/>

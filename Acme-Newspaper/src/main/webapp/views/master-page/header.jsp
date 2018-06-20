@@ -73,6 +73,13 @@
 <div align="center">
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
+		
+		<security:authorize access="hasRole('ADMIN')">
+		<li><a class="fNiv" href="comodin/administrator/myList.do"><spring:message
+					code="master.page.myList" /></a></li>
+		</security:authorize>
+		
+		
 		<li><a class="fNiv" href="newspaper/list.do"><spring:message
 					code="master.page.newspaper.published" /></a></li>
 

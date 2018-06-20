@@ -2292,8 +2292,8 @@
 	<property name="ticker" value="180601:ABCDEF"/>
 	<property name="gauge" value="1"/>
 	<property name="moment">
-			<bean factory-bean="date" factory-method="parse">
-				<constructor-arg value="01/06/2018" />
+			<bean factory-bean="dateAndTime" factory-method="parse">
+				<constructor-arg value="01/06/2018 14:00" />
 			</bean>
 	</property>	
 	<property name="shortTitle" value="short Title 1"/>
@@ -2309,8 +2309,8 @@
 	<property name="ticker" value="180602:GHIJKL"/>
 	<property name="gauge" value="2"/>
 	<property name="moment">
-			<bean factory-bean="date" factory-method="parse">
-				<constructor-arg value="10/10/2018" />
+			<bean factory-bean="dateAndTime" factory-method="parse">
+				<constructor-arg value="10/10/2018 13:00" />
 			</bean>
 	</property>	
 	<property name="shortTitle" value="short Title 2"/>
@@ -2327,8 +2327,8 @@
 	<property name="ticker" value="180605:ABEDEF"/>
 	<property name="gauge" value="1"/>
 	<property name="moment">
-			<bean factory-bean="date" factory-method="parse">
-				<constructor-arg value="01/06/2018" />
+			<bean factory-bean="dateAndTime" factory-method="parse">
+				<constructor-arg value="01/06/2018 12:00" />
 			</bean>
 	</property>	
 	<property name="shortTitle" value="short Title 3"/>
@@ -2343,8 +2343,8 @@
 	<property name="ticker" value="180510:ASHEIW"/>
 	<property name="gauge" value="3"/>
 	<property name="moment">
-			<bean factory-bean="date" factory-method="parse">
-				<constructor-arg value="10/12/2018" />
+			<bean factory-bean="dateAndTime" factory-method="parse">
+				<constructor-arg value="10/12/2018 11:00" />
 			</bean>
 	</property>	
 	<property name="shortTitle" value="short Title 4"/>
@@ -2360,8 +2360,8 @@
 	<property name="ticker" value="180502:GHIJKL"/>
 	<property name="gauge" value="2"/>
 	<property name="moment">
-			<bean factory-bean="date" factory-method="parse">
-				<constructor-arg value="05/05/2018" />
+			<bean factory-bean="dateAndTime" factory-method="parse">
+				<constructor-arg value="05/05/2018 10:00" />
 			</bean>
 	</property>	
 	<property name="shortTitle" value="short Title 5"/>

@@ -93,8 +93,14 @@ public class ComodinAdministratorController extends AbstractController {
 			} catch (final Throwable e) {
 				if (e.getMessage().equals("not.principal"))
 					modelAndView = this.createEditModelAndView(c, "not.principal");
+				else if (e.getMessage().equals("moment.before"))
+					modelAndView = this.createEditModelAndView(c, "moment.before");
 				else if (e.getMessage().equals("in.finalMode"))
 					modelAndView = this.createEditModelAndView(c, "in.finalMode");
+				else if (e.getMessage().equals("yet.asociated"))
+					modelAndView = this.createEditModelAndView(c, "yet.asociated");
+				else if (e.getMessage().equals("necessary.finalMode"))
+					modelAndView = this.createEditModelAndView(c, "necessary.finalMode");
 				else
 					modelAndView = this.createEditModelAndView(c, "commit.error");
 			}
@@ -130,9 +136,10 @@ public class ComodinAdministratorController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Comodin n, final String message) {
 		ModelAndView result;
 		final Administrator admin = (Administrator) this.loginService.getPrincipalActor();
-		Assert.isTrue(n.getAdministrator() == admin);
+		Assert.isTrue(n.getAdministrator().equals(admin));
 		result = new ModelAndView("comodin/edit");
-		result.addObject("comodines", this.newspaperService.getNotPublishedNewspapers());
+		result.addObject("comodines", admin.getComodines());
+		result.addObject("newspapers", this.newspaperService.getPublishedNewspapers());
 		result.addObject("comodin", n);
 		result.addObject("message", message);
 		return result;

@@ -37,7 +37,7 @@ public class ComodinController extends AbstractController {
 	public ModelAndView list(@RequestParam final int newspaperId) {
 		final ModelAndView res = new ModelAndView("comodin/list");
 		final Newspaper newspaper = this.newspaperService.findOne(newspaperId);
-		final List<Comodin> comodines = (List<Comodin>) this.comodinService.comodinFinalMode(newspaper);
+		final List<Comodin> comodines = (List<Comodin>) this.comodinService.comodinFinalModeMomentAfter(newspaper);
 		res.addObject("comodines", comodines);
 		res.addObject("requestURI", "comodin/list.do");
 		return res;
