@@ -82,7 +82,7 @@ public class ComodinAdministratorController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Comodin c, final BindingResult binding) {
+	public ModelAndView save(Comodin c, final BindingResult binding) {
 		ModelAndView modelAndView;
 		try {
 			c = this.comodinService.reconstruct(c, binding);

@@ -133,12 +133,16 @@ public class ComodinService {
 		Comodin result;
 
 		if (c.getId() == 0) {
+			result = c;
+			result.setAdministrator((Administrator) this.loginService.getPrincipalActor());
+			result.setTicker(this.generateCode());
 			if (c.getMoment() != null) {
+
 				final Date actual = new Date();
 				Assert.isTrue(c.getMoment().after(actual), "moment.before");
 				Assert.isTrue(c.getNewspaper() == null, "necessary.finalMode");
 			}
-			result = c;
+
 		} else {
 			result = this.comodinRepository.findOne(c.getId());
 			if (result.isFinalMode()) {
@@ -163,12 +167,10 @@ public class ComodinService {
 			result.setGauge(c.getGauge());
 			result.setMoment(c.getMoment());
 			result.setNewspaper(c.getNewspaper());
-			result.setAdministrator(c.getAdministrator());
 			result.setShortTitle(c.getShortTitle());
-			result.setTicker(c.getTicker());
 
-			this.validator.validate(result, binding);
 		}
+		this.validator.validate(result, binding);
 		return result;
 	}
 }

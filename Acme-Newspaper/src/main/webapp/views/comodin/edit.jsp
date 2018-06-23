@@ -13,9 +13,6 @@
 <jstl:when test="${comodinBD.finalMode eq true}" >
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
-	<form:hidden path="administrator"/>
-	<form:hidden path="ticker"/>
-	<form:hidden path="finalMode"/>
 	
 	<form:label path="newspaper">
 		<spring:message code="comodin.newspaper" />
@@ -46,8 +43,6 @@
 <jstl:otherwise>
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
-	<form:hidden path="administrator"/>
-	<form:hidden path="ticker"/>
 
 	
 	<acme:textbox code="comodin.shortTitle" path="shortTitle"/><br>
