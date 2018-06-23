@@ -63,29 +63,31 @@ public class ComodinService {
 		return this.comodinRepository.findOne(comodinId);
 	}
 
-	public Comodin save(final Comodin comodin) {
-		Assert.notNull(comodin);
+	public Comodin save(final Comodin c) {
+		Assert.notNull(c);
 
-		//		final Comodin result = this.comodinRepository.findOne(comodin.getId());
-		//
-		//		if (comodin.getId() != 0 && result.isFinalMode()) {
-		//			Assert.isTrue(result.getNewspaper() == null, "yet.asociated");
-		//			result.setNewspaper(comodin.getNewspaper());
-		//			final Timestamp stamp = (Timestamp) result.getMoment();
-		//			final Date date = new Date(stamp.getTime());
-		//			result.setMoment(date);
-		//			Assert.isTrue(result.getMoment().equals(comodin.getMoment()));
-		//			Assert.isTrue(result.equals(comodin), "in.finalMode");
-		//		}
-		//		if (comodin.isFinalMode() == false) {
-		//			if (comodin.getMoment() != null) {
-		//				final Date actual = new Date();
-		//				Assert.isTrue(comodin.getMoment().after(actual), "moment.before");
-		//			}
-		//			Assert.isTrue(comodin.getNewspaper() == null, "necessary.finalMode");
-		//
-		//		}
-		return this.comodinRepository.save(comodin);
+		if (c.getMoment() != null) {
+			final Date actual = new Date();
+			Assert.isTrue(c.getMoment().after(actual), "moment.before");
+		}
+
+		if (c.getId() == 0)
+			Assert.isTrue(c.getNewspaper() == null, "necessary.finalMode");
+		else {
+			final Comodin bd = this.comodinRepository.findOne(c.getId());
+			if (bd.isFinalMode()) {
+				Assert.isTrue(bd.getNewspaper() == null, "yet.asociated");
+				bd.setNewspaper(c.getNewspaper());
+				final Timestamp stamp = (Timestamp) bd.getMoment();
+				final Date date = new Date(stamp.getTime());
+				bd.setMoment(date);
+				Assert.isTrue(bd.getMoment().equals(c.getMoment()));
+				Assert.isTrue(bd.equals(c), "in.finalMode");
+			}
+			if (bd.isFinalMode() == false)
+				Assert.isTrue(c.getNewspaper() == null, "necessary.finalMode");
+		}
+		return this.comodinRepository.save(c);
 	}
 	public void delete(final Comodin comodin) {
 		Assert.isTrue(comodin.isFinalMode() == false, "in.finalMode");
@@ -131,46 +133,23 @@ public class ComodinService {
 
 	public Comodin reconstruct(final Comodin c, final BindingResult binding) {
 		Comodin result;
+		Comodin bd;
 
 		if (c.getId() == 0) {
+			c.setAdministrator((Administrator) this.loginService.getPrincipalActor());
+			c.setTicker(this.generateCode());
 			result = c;
-			result.setAdministrator((Administrator) this.loginService.getPrincipalActor());
-			result.setTicker(this.generateCode());
-			if (c.getMoment() != null) {
-
-				final Date actual = new Date();
-				Assert.isTrue(c.getMoment().after(actual), "moment.before");
-				Assert.isTrue(c.getNewspaper() == null, "necessary.finalMode");
-			}
 
 		} else {
-			result = this.comodinRepository.findOne(c.getId());
-			if (result.isFinalMode()) {
-				Assert.isTrue(result.getNewspaper() == null, "yet.asociated");
-				result.setNewspaper(c.getNewspaper());
-				final Timestamp stamp = (Timestamp) result.getMoment();
-				final Date date = new Date(stamp.getTime());
-				result.setMoment(date);
-				Assert.isTrue(result.getMoment().equals(c.getMoment()));
-				Assert.isTrue(result.equals(c), "in.finalMode");
-			}
-			if (result.isFinalMode() == false) {
-				if (c.getMoment() != null) {
-					final Date actual = new Date();
-					Assert.isTrue(c.getMoment().after(actual), "moment.before");
-				}
-				Assert.isTrue(c.getNewspaper() == null, "necessary.finalMode");
-			}
+			bd = this.comodinRepository.findOne(c.getId());
+			c.setAdministrator(bd.getAdministrator());
+			c.setTicker(bd.getTicker());
 
-			result.setDescription(c.getDescription());
-			result.setFinalMode(c.isFinalMode());
-			result.setGauge(c.getGauge());
-			result.setMoment(c.getMoment());
-			result.setNewspaper(c.getNewspaper());
-			result.setShortTitle(c.getShortTitle());
+			result = c;
 
 		}
-		this.validator.validate(result, binding);
+		this.validator.validate(c, binding);
+
 		return result;
 	}
 }

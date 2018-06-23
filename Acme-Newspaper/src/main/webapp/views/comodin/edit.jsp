@@ -34,6 +34,8 @@
 	<form:errors cssClass="error" path="gauge"/>
 	<br /><br>
 	
+	
+	
 	<input type="submit" name="save" value="<spring:message code="template.save"/>" />
 	
 	<input type="button" name="cancel" value="<spring:message code="template.cancel"/>" 

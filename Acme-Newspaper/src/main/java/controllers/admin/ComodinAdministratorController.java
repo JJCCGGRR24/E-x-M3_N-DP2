@@ -137,7 +137,7 @@ public class ComodinAdministratorController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Comodin n, final String message) {
 		ModelAndView result;
 		final Administrator admin = (Administrator) this.loginService.getPrincipalActor();
-		Assert.isTrue(n.getAdministrator().equals(admin));
+		Assert.isTrue(n.getAdministrator().equals(admin), "jajaja");
 		result = new ModelAndView("comodin/edit");
 		result.addObject("comodines", admin.getComodines());
 		result.addObject("newspapers", this.newspaperService.getPublishedNewspapers());

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ActorRepository;
+import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
 
@@ -57,7 +58,7 @@ public class ActorService {
 	}
 
 	public Actor findByUserAccount(final UserAccount u) {
-		return this.actorRepository.findByUsername(u.getUsername());
+		return this.actorRepository.getPrincipal(LoginService.getPrincipal());
 	}
 
 	// Other business methods -------------------------------------------------
