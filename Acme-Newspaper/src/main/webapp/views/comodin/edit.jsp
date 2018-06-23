@@ -17,9 +17,11 @@
 	<form:label path="newspaper">
 		<spring:message code="comodin.newspaper" />
 	</form:label>	
-	<form:select  path="newspaper" >
-		<form:options items="${newspapers}" itemValue="id" itemLabel="title"/>
-	</form:select>
+	<form:select path="newspaper" cssStyle="width:400px;"> 
+		<jstl:forEach items="${newspapers}" var="cat">
+			<form:option value="${cat.id}" label="${cat.title} (${cat.publicationDate})"/>
+		</jstl:forEach>
+	</form:select> 
 	<form:errors path="newspaper" cssClass="error" />
 	<br /><br>
 	
@@ -34,6 +36,8 @@
 	<form:errors cssClass="error" path="gauge"/>
 	<br /><br>
 	
+	<spring:message code="comodin.finalMode" var="finalModeHeader"/>
+	<form:checkbox  label="${finalModeHeader}" path="finalMode" onclick="javascript: return false;"/><br><br>
 	
 	
 	<input type="submit" name="save" value="<spring:message code="template.save"/>" />
