@@ -10,10 +10,6 @@
 
 package controllers.admin;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -57,9 +53,8 @@ public class ComodinAdministratorController extends AbstractController {
 	public ModelAndView myList() {
 		ModelAndView result;
 		final Administrator a = (Administrator) this.loginService.getPrincipalActor();
-		final List<Comodin> comodines = (List<Comodin>) a.getComodines();
 		result = new ModelAndView("comodin/list");
-		result.addObject("comodines", comodines);
+		result.addObject("comodines", this.comodinService.getAvailable(a));
 		result.addObject("requestURI", "comodin/administrator/myList.do");
 		return result;
 	}
@@ -84,33 +79,36 @@ public class ComodinAdministratorController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(Comodin c, final BindingResult binding) {
 		ModelAndView modelAndView;
-		try {
-			c = this.comodinService.reconstruct(c, binding);
-			if (binding.hasErrors())
-				modelAndView = this.createEditModelAndView(c);
-			else {
+
+		c = this.comodinService.reconstruct(c, binding);
+		if (binding.hasErrors())
+			modelAndView = this.createEditModelAndView(c);
+		else
+			try {
 				this.comodinService.save(c);
 				modelAndView = new ModelAndView("redirect:/comodin/administrator/myList.do");
+
+			} catch (final Throwable e) {
+				if (e.getMessage().equals("not.principal"))
+					modelAndView = this.createEditModelAndView(c, "not.principal");
+				else if (e.getMessage().equals("moment.before"))
+					modelAndView = this.createEditModelAndView(c, "moment.before");
+				else if (e.getMessage().equals("in.finalMode"))
+					modelAndView = this.createEditModelAndView(c, "in.finalMode");
+				else if (e.getMessage().equals("yet.asociated"))
+					modelAndView = this.createEditModelAndView(c, "yet.asociated");
+				else if (e.getMessage().equals("necessary.finalMode"))
+					modelAndView = this.createEditModelAndView(c, "necessary.finalMode");
+				else
+					modelAndView = this.createEditModelAndView(c, "commit.error");
 			}
-		} catch (final Throwable e) {
-			if (e.getMessage().equals("not.principal"))
-				modelAndView = this.createEditModelAndView(c, "not.principal");
-			else if (e.getMessage().equals("moment.before"))
-				modelAndView = this.createEditModelAndView(c, "moment.before");
-			else if (e.getMessage().equals("in.finalMode"))
-				modelAndView = this.createEditModelAndView(c, "in.finalMode");
-			else if (e.getMessage().equals("yet.asociated"))
-				modelAndView = this.createEditModelAndView(c, "yet.asociated");
-			else if (e.getMessage().equals("necessary.finalMode"))
-				modelAndView = this.createEditModelAndView(c, "necessary.finalMode");
-			else
-				modelAndView = this.createEditModelAndView(c, "commit.error");
-		}
 		return modelAndView;
 	}
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(@Valid final Comodin c, final BindingResult binding) {
+	public ModelAndView delete(Comodin c, final BindingResult binding) {
 		ModelAndView modelAndView;
+
+		c = this.comodinService.reconstruct(c, binding);
 		if (binding.hasErrors())
 			modelAndView = this.createEditModelAndView(c);
 		else
@@ -139,7 +137,7 @@ public class ComodinAdministratorController extends AbstractController {
 		final Administrator admin = (Administrator) this.loginService.getPrincipalActor();
 		Assert.isTrue(n.getAdministrator().equals(admin));
 		result = new ModelAndView("comodin/edit");
-		result.addObject("comodines", admin.getComodines());
+		result.addObject("comodines", this.comodinService.getAvailable(admin));
 		result.addObject("newspapers", this.newspaperService.getPublishedNewspapers());
 		result.addObject("comodin", n);
 		result.addObject("comodinBD", this.comodinService.findOne(n.getId()));

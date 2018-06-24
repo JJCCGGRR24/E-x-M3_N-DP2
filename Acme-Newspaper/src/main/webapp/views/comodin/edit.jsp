@@ -58,7 +58,7 @@
 	<form:label path="gauge">
 		<spring:message code="comodin.gauge"/>:
 	</form:label>
-	<form:input path="gauge" type="number" max="3" min="1" value = "1"/>
+	<form:input path="gauge" type="number" max="3" min="1" value = "${comodin.gauge}"/>
 	<form:errors cssClass="error" path="gauge"/>
 	<br /><br>
 	

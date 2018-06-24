@@ -125,9 +125,17 @@ public class ComodinService {
 		return new String(text);
 	}
 
-	public Collection<Comodin> comodinFinalModeMomentAfter(final Newspaper newspaper) {
+	public Collection<Comodin> getFinalModeMomentAfter(final Newspaper newspaper) {
 		final Date actual = new Date();
-		return this.comodinRepository.comodinFinalModeMomentAfter(newspaper, actual);
+		return this.comodinRepository.getFinalModeMomentAfter(newspaper, actual);
+	}
+
+	public Collection<Comodin> getAvailable(final Administrator a) {
+		final Date actual = new Date();
+		final Collection<Comodin> c = this.comodinRepository.getAvailable(actual, a);
+		final Collection<Comodin> all = a.getComodines();
+		all.removeAll(c);
+		return all;
 	}
 
 	public Comodin reconstruct(final Comodin c, final BindingResult binding) {

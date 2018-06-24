@@ -45,7 +45,7 @@
 	</jstl:choose>
 	
 
-<acme:date code="comodin.moment" property="moment"/>
+<acme:date2 code="comodin.moment" property="moment"/>
 <acme:column code="comodin.shortTitle" property="shortTitle"/>
 <acme:column code="comodin.description" property="description"/>
 
