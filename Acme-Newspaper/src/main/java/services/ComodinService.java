@@ -67,27 +67,22 @@ public class ComodinService {
 		final Date actual = new Date();
 
 		if (c.getId() == 0) {
-			Assert.isTrue(c.getMoment().after(actual), "moment.before");
+			if (c.getMoment() != null)
+				Assert.isTrue(c.getMoment().after(actual), "moment.before");
 			Assert.isTrue(c.getNewspaper() == null, "necessary.finalMode");
 		} else {
 			final Comodin bd = this.comodinRepository.findOne(c.getId());
 			if (bd.isFinalMode()) {
 				Assert.isTrue(bd.getNewspaper() == null, "yet.asociated");
-				Assert.isTrue(c.getMoment().after(actual), "moment.before");
+				if (c.getMoment() != null)
+					Assert.isTrue(c.getMoment().after(actual), "moment.before");
+				this.verify(c);
 
-				//				//convertir la fecha de bd a date para comparar
-				//				final Timestamp stamp2 = (Timestamp) bd.getMoment();
-				//				final Date date2 = new Date(stamp2.getTime());
-				//				//convertir la fecha que le paso por formulario a timestamp para comparar
-				//				final Date date = c.getMoment();
-				//				final Timestamp stamp = new Timestamp(date.getTime());
-
-				Assert.isTrue(bd.getDescription().equals(c.getDescription()) && bd.getGauge() == (c.getGauge()) && (c.getMoment().equals(bd.getMoment()) || bd.getMoment().equals(c.getMoment())) && bd.getDescription().equals(c.getDescription())
-					&& bd.getShortTitle().equals(c.getShortTitle()) && bd.isFinalMode() == c.isFinalMode(), "in.finalMode");
-			}
-			if (bd.isFinalMode() == false) {
-				Assert.isTrue(c.getMoment().after(actual), "moment.before");
-				Assert.isTrue(c.getNewspaper() == null, "necessary.finalMode");
+				if (bd.isFinalMode() == false) {
+					if (c.getMoment() != null)
+						Assert.isTrue(c.getMoment().after(actual), "moment.before");
+					Assert.isTrue(c.getNewspaper() == null, "necessary.finalMode");
+				}
 			}
 		}
 		return this.comodinRepository.save(c);
@@ -101,6 +96,20 @@ public class ComodinService {
 	}
 
 	// Other business methods -------------------------------------------------
+
+	public void verify(final Comodin c) {
+
+		final Comodin bd = this.comodinRepository.findOne(c.getId());
+		Assert.isTrue(bd.getShortTitle().equals(c.getShortTitle()), "in.finalMode");
+		Assert.isTrue(bd.getDescription().equals(c.getDescription()), "in.finalMode");
+		Assert.isTrue(bd.getGauge() == (c.getGauge()), "in.finalMode");
+		Assert.isTrue(bd.isFinalMode() == c.isFinalMode(), "in.finalMode");
+
+		if (bd.getMoment() != null)
+			Assert.isTrue(c.getMoment().equals(bd.getMoment()), "in.finalMode");
+		else
+			Assert.isNull(c.getMoment(), "in.finalMode");
+	}
 
 	@SuppressWarnings("deprecation")
 	public String generateCode() {

@@ -16,4 +16,5 @@ public interface ActorRepository extends JpaRepository<Actor, Integer> {
 
 	@Query("select a from Actor a where a.userAccount = ?1")
 	Actor getPrincipal(UserAccount u);
+
 }

@@ -114,6 +114,7 @@ public class Newspaper extends DomainEntity {
 
 
 	@OneToMany(mappedBy = "newspaper", cascade = CascadeType.REMOVE)
+	@Valid
 	public Collection<Comodin> getComodines() {
 		return this.comodines;
 	}

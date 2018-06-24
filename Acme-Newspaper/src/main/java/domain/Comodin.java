@@ -7,7 +7,9 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -22,6 +24,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Table(indexes = {
+	@Index(name = "index_finalMode", columnList = "finalMode"), @Index(name = "index_newspaper", columnList = "newspaper_id"), @Index(name = "index_administrator", columnList = "administrator_id"), @Index(name = "index_moment", columnList = "moment"),
+
+})
 public class Comodin extends DomainEntity {
 
 	//Attributes
@@ -44,7 +50,6 @@ public class Comodin extends DomainEntity {
 		this.ticker = ticker;
 	}
 
-	//	@NotNull
 	@Range(min = 1, max = 3)
 	public int getGauge() {
 		return this.gauge;
@@ -54,7 +59,6 @@ public class Comodin extends DomainEntity {
 		this.gauge = gauge;
 	}
 
-	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getMoment() {
