@@ -62,6 +62,10 @@
 	<jstl:if test="${(row.administrator.userAccount eq userAccount) and (row.finalMode eq true) and (row.newspaper == null)}">	
 	<a href="${editURL}"><spring:message code="template.associate"/></a>
 	</jstl:if>
+	
+	<jstl:if test="${!(row.newspaper == null)}">	
+	<jstl:out value="${row.newspaper.title}"/>
+	</jstl:if>
 </display:column>
 
 </display:table>
