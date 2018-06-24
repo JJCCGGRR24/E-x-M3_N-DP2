@@ -1,7 +1,6 @@
 
 package services;
 
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Random;
@@ -75,11 +74,16 @@ public class ComodinService {
 			if (bd.isFinalMode()) {
 				Assert.isTrue(bd.getNewspaper() == null, "yet.asociated");
 				Assert.isTrue(c.getMoment().after(actual), "moment.before");
-				final Timestamp stamp = (Timestamp) bd.getMoment();
-				final Date date = new Date(stamp.getTime());
-				Assert.isTrue(
-					bd.getDescription().equals(c.getDescription()) && bd.getGauge() == (c.getGauge()) && date.equals(c.getMoment()) && bd.getDescription().equals(c.getDescription()) && bd.getShortTitle().equals(c.getShortTitle())
-						&& bd.isFinalMode() == c.isFinalMode(), "in.finalMode");
+
+				//				//convertir la fecha de bd a date para comparar
+				//				final Timestamp stamp2 = (Timestamp) bd.getMoment();
+				//				final Date date2 = new Date(stamp2.getTime());
+				//				//convertir la fecha que le paso por formulario a timestamp para comparar
+				//				final Date date = c.getMoment();
+				//				final Timestamp stamp = new Timestamp(date.getTime());
+
+				Assert.isTrue(bd.getDescription().equals(c.getDescription()) && bd.getGauge() == (c.getGauge()) && (c.getMoment().equals(bd.getMoment()) || bd.getMoment().equals(c.getMoment())) && bd.getDescription().equals(c.getDescription())
+					&& bd.getShortTitle().equals(c.getShortTitle()) && bd.isFinalMode() == c.isFinalMode(), "in.finalMode");
 			}
 			if (bd.isFinalMode() == false) {
 				Assert.isTrue(c.getMoment().after(actual), "moment.before");

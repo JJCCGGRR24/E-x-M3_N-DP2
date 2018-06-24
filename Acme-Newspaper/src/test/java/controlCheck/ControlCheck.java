@@ -36,9 +36,9 @@ public class ControlCheck extends AbstractTest {
 		final Object testingData[][] = {
 			{
 
-				"admin", 2, "12/09/2018 10:00", "shortTitle", "description", false, "12/05/2019 10:00", null
+				"admin", 2, "12/09/2018 10:00", "shortTitle", "description", false, "newShortTitle", null
 			}, {
-				"admin", 2, "12/09/2018 10:00", "shortTitle", "description", false, "12/05/2018 10:00", IllegalArgumentException.class
+				"admin", 2, "12/09/2018 10:00", "shortTitle", "description", false, "", javax.validation.ConstraintViolationException.class
 			}
 
 		};
@@ -47,7 +47,7 @@ public class ControlCheck extends AbstractTest {
 			this.template((String) testingData[i][0], (int) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (String) testingData[i][4], (boolean) testingData[i][5], (String) testingData[i][6], (Class<?>) testingData[i][7]);
 
 	}
-	protected void template(final String username, final int gauge, final String moment, final String shortTitle, final String description, final boolean finalMode, final String newMoment, final Class<?> expected) {
+	protected void template(final String username, final int gauge, final String moment, final String shortTitle, final String description, final boolean finalMode, final String newShortTitle, final Class<?> expected) {
 		Class<?> caught;
 
 		caught = null;
@@ -67,11 +67,9 @@ public class ControlCheck extends AbstractTest {
 			//Guardamos en base de datos el objeto
 			final Comodin save = this.comodinService.save(c);
 
-			//Editamos el parámetro moment del objeto y guardamos en modo final
+			//Editamos el parámetro shortTitle del objeto y guardamos en modo final
 
-			final SimpleDateFormat pattern2 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-			final Date date2 = pattern2.parse(newMoment);
-			save.setMoment(date2);
+			save.setShortTitle(newShortTitle);
 			save.setFinalMode(true);
 
 			//guardamos
