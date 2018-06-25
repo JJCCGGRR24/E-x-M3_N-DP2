@@ -64,6 +64,8 @@ public class NulpService {
 
 	public Nulp save(final Nulp c) {
 		Assert.notNull(c);
+		final Administrator admin = (Administrator) this.loginService.getPrincipalActor();
+		Assert.isTrue(c.getAdministrator().equals(admin), "not.principal");
 		final Date actual = new Date();
 
 		if (c.getId() == 0) {
@@ -87,7 +89,10 @@ public class NulpService {
 		return this.nulpRepository.save(c);
 	}
 	public void delete(final Nulp nulp) {
-		Assert.isTrue(nulp.isFinalMode() == false, "in.finalMode");
+		final Administrator admin = (Administrator) this.loginService.getPrincipalActor();
+		Assert.isTrue(nulp.getAdministrator().equals(admin), "not.principal");
+		final Nulp bd = this.nulpRepository.findOne(nulp.getId());
+		Assert.isTrue(bd.isFinalMode() == false, "in.finalMode");
 		this.nulpRepository.delete(nulp);
 	}
 	public void flush() {

@@ -63,6 +63,7 @@ public class NulpAdministratorController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		final ModelAndView modelAndView;
+
 		final Nulp n = this.nulpService.create();
 		modelAndView = this.createEditModelAndView(n);
 		return modelAndView;
@@ -116,6 +117,8 @@ public class NulpAdministratorController extends AbstractController {
 				this.nulpService.delete(c);
 				modelAndView = new ModelAndView("redirect:/nulp/administrator/myList.do");
 			} catch (final Throwable e) {
+				if (e.getMessage().equals("not.principal"))
+					modelAndView = this.createEditModelAndView(c, "not.principal");
 				if (e.getMessage().equals("in.finalMode"))
 					modelAndView = this.createEditModelAndView(c, "in.finalMode");
 				else
@@ -135,7 +138,7 @@ public class NulpAdministratorController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Nulp n, final String message) {
 		ModelAndView result;
 		final Administrator admin = (Administrator) this.loginService.getPrincipalActor();
-		Assert.isTrue(n.getAdministrator().equals(admin));
+		Assert.isTrue(n.getAdministrator().equals(admin), "not.isprincipal");
 		result = new ModelAndView("nulp/edit");
 		result.addObject("nulpList", this.nulpService.getAvailable(admin));
 		result.addObject("newspapers", this.newspaperService.getPublishedNewspapers());
