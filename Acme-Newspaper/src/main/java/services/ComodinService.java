@@ -77,12 +77,11 @@ public class ComodinService {
 				if (c.getMoment() != null)
 					Assert.isTrue(c.getMoment().after(actual), "moment.before");
 				this.verify(c);
-
-				if (bd.isFinalMode() == false) {
-					if (c.getMoment() != null)
-						Assert.isTrue(c.getMoment().after(actual), "moment.before");
-					Assert.isTrue(c.getNewspaper() == null, "necessary.finalMode");
-				}
+			}
+			if (bd.isFinalMode() == false) {
+				if (c.getMoment() != null)
+					Assert.isTrue(c.getMoment().after(actual), "moment.before");
+				Assert.isTrue(c.getNewspaper() == null, "necessary.finalMode");
 			}
 		}
 		return this.comodinRepository.save(c);
