@@ -110,17 +110,17 @@ public class Newspaper extends DomainEntity {
 	private Collection<Subscribe>		subscribes;
 	private Collection<Volume>			volumes;
 	private Collection<Advertisement>	advertisements;
-	private Collection<Comodin>			comodines;
+	private Collection<Nulp>			nulpList;
 
 
 	@OneToMany(mappedBy = "newspaper", cascade = CascadeType.REMOVE)
 	@Valid
-	public Collection<Comodin> getComodines() {
-		return this.comodines;
+	public Collection<Nulp> getNulpList() {
+		return this.nulpList;
 	}
 
-	public void setComodines(final Collection<Comodin> comodines) {
-		this.comodines = comodines;
+	public void setNulpList(final Collection<Nulp> nulpList) {
+		this.nulpList = nulpList;
 	}
 
 	@Valid

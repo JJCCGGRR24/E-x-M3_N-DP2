@@ -28,7 +28,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 	@Index(name = "index_finalMode", columnList = "finalMode"), @Index(name = "index_newspaper", columnList = "newspaper_id"), @Index(name = "index_administrator", columnList = "administrator_id"), @Index(name = "index_moment", columnList = "moment"),
 
 })
-public class Comodin extends DomainEntity {
+public class Nulp extends DomainEntity {
 
 	//Attributes
 	private String	ticker;

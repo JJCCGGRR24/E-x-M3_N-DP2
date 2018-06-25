@@ -9,25 +9,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ComodinService;
 import services.NewspaperService;
-import domain.Comodin;
+import services.NulpService;
 import domain.Newspaper;
+import domain.Nulp;
 
 @Controller()
-@RequestMapping("/comodin")
-public class ComodinController extends AbstractController {
+@RequestMapping("/nulp")
+public class NulpController extends AbstractController {
 
 	//Services
 	@Autowired
-	private ComodinService		comodinService;
+	private NulpService			nulpService;
 
 	@Autowired
 	private NewspaperService	newspaperService;
 
 
 	//Constructor
-	public ComodinController() {
+	public NulpController() {
 		super();
 	}
 
@@ -35,11 +35,11 @@ public class ComodinController extends AbstractController {
 
 	@RequestMapping("/list")
 	public ModelAndView list(@RequestParam final int newspaperId) {
-		final ModelAndView res = new ModelAndView("comodin/list");
+		final ModelAndView res = new ModelAndView("nulp/list");
 		final Newspaper newspaper = this.newspaperService.findOne(newspaperId);
-		final List<Comodin> comodines = (List<Comodin>) this.comodinService.getFinalModeMomentAfter(newspaper);
-		res.addObject("comodines", comodines);
-		res.addObject("requestURI", "comodin/list.do");
+		final List<Nulp> nulpList = (List<Nulp>) this.nulpService.getFinalModeMomentAfter(newspaper);
+		res.addObject("nulpList", nulpList);
+		res.addObject("requestURI", "nulp/list.do");
 		return res;
 
 	}

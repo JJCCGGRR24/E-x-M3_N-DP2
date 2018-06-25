@@ -2288,7 +2288,7 @@
 <!-- #Entidad nueva -->
 
 <!-- Entidad ya asociado con un viaje, publicada y en final mode -->
-<bean id="comodin1" class="domain.Comodin">
+<bean id="nulp1" class="domain.Nulp">
 	<property name="ticker" value="180601:ABCDEF"/>
 	<property name="gauge" value="1"/>
 	<property name="moment">
@@ -2305,7 +2305,7 @@
 </bean>
 
 <!-- Entidad ya asociado con un viaje, no publicada y en final mode-->
-<bean id="comodin2" class="domain.Comodin">
+<bean id="nulp2" class="domain.Nulp">
 	<property name="ticker" value="180602:GHIJKL"/>
 	<property name="gauge" value="2"/>
 	<property name="moment">
@@ -2323,7 +2323,7 @@
 
 <!-- Entidad no asociado con un viaje, no publicada y en final mode-->
 
-<bean id="comodin3" class="domain.Comodin">
+<bean id="nulp3" class="domain.Nulp">
 	<property name="ticker" value="180605:ABEDEF"/>
 	<property name="gauge" value="1"/>
 	<property name="moment">
@@ -2339,7 +2339,7 @@
 </bean>
 
 <!-- Entidad no asociado con un viaje, no publicada y NO final mode-->
-<bean id="comodin4" class="domain.Comodin">
+<bean id="nulp4" class="domain.Nulp">
 	<property name="ticker" value="180510:ASHEIW"/>
 	<property name="gauge" value="3"/>
 	<property name="moment">
@@ -2356,7 +2356,7 @@
 
 
 <!-- Entidad ya asociado con un viaje, publicada y en final mode-->
-<bean id="comodin5" class="domain.Comodin">
+<bean id="nulp5" class="domain.Nulp">
 	<property name="ticker" value="180502:GHIJKL"/>
 	<property name="gauge" value="2"/>
 	<property name="moment">

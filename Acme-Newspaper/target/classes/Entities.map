@@ -1,5 +1,5 @@
 #./src/main/resources/Entities.map
-#Mon Jun 25 01:53:53 CEST 2018
+#Mon Jun 25 05:52:34 CEST 2018
 trash_boxX=287
 in_boxX=285
 message1=315
@@ -54,12 +54,17 @@ subscribe2_1=245
 trash_box1=257
 in_box1=255
 cialis=166
+nulp5=326
 user3=188
+nulp4=325
 spam_box9=303
 user2=187
+nulp3=324
 spam_box8=298
 user1=186
+nulp2=323
 spam_box7=293
+nulp1=322
 spam_box6=283
 spam_box5=278
 spam_box4=273
@@ -67,11 +72,6 @@ spam_box3=268
 spam_box2=263
 spam_box1=258
 adminAccount2=169
-comodin5=326
-comodin4=325
-comodin3=324
-comodin2=323
-comodin1=322
 article15=219
 article14=218
 article13=217

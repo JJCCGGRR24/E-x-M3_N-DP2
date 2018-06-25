@@ -34,7 +34,7 @@
 		<value>/views/mesage/messages</value>
 		<value>/views/volume/messages</value>
 		<value>/views/folder/messages</value>
-		<value>/views/comodin/messages</value>
+		<value>/views/nulp/messages</value>
 		
 	</util:list>
 

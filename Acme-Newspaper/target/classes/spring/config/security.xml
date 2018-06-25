@@ -24,13 +24,13 @@
 		<security:intercept-url pattern="/" access="permitAll" />
 
 
-	<security:intercept-url pattern="/comodin/list.do"
+	<security:intercept-url pattern="/nulp/list.do"
 			access="permitAll" />
-	<security:intercept-url pattern="/comodin/administrator/edit.do"
+	<security:intercept-url pattern="/nulp/administrator/edit.do"
 			access="hasRole('ADMIN')" />
-	<security:intercept-url pattern="/comodin/administrator/create.do"
+	<security:intercept-url pattern="/nulp/administrator/create.do"
 			access="hasRole('ADMIN')" />
-	<security:intercept-url pattern="/comodin/administrator/myList.do"
+	<security:intercept-url pattern="/nulp/administrator/myList.do"
 			access="hasRole('ADMIN')" />		
 
 		<security:intercept-url pattern="/law/**"

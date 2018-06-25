@@ -12,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import services.ComodinService;
+import services.NulpService;
 import utilities.AbstractTest;
-import domain.Comodin;
+import domain.Nulp;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -26,7 +26,7 @@ public class ControlCheck extends AbstractTest {
 	//SUT
 
 	@Autowired
-	private ComodinService	comodinService;
+	private NulpService	nulpService;
 
 
 	//	Administrator who writes a XXXX, saves it in draft mode, then changes it, and saves it in final mode.
@@ -35,9 +35,10 @@ public class ControlCheck extends AbstractTest {
 	public void driver() {
 		final Object testingData[][] = {
 			{
-
+				//nos logueamos como admin y creamos uno con parametros válidos
 				"admin", 2, "12/09/2018 10:00", "shortTitle", "description", false, "newShortTitle", null
 			}, {
+				//nos logueamos como admin e intentamos editarlo cambiando en titulo pequeño a una cadena vacia, el sistema no nos debe dejar
 				"admin", 2, "12/09/2018 10:00", "shortTitle", "description", false, "", javax.validation.ConstraintViolationException.class
 			}
 
@@ -55,7 +56,7 @@ public class ControlCheck extends AbstractTest {
 			//Nos logueamos como administrador
 			super.authenticate(username);
 			//Creamos el objeto
-			final Comodin c = this.comodinService.create();
+			final Nulp c = this.nulpService.create();
 			//Introducimos los datos
 			final SimpleDateFormat pattern = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 			final Date date = pattern.parse(moment);
@@ -65,7 +66,7 @@ public class ControlCheck extends AbstractTest {
 			c.setMoment(date);
 			c.setShortTitle(shortTitle);
 			//Guardamos en base de datos el objeto
-			final Comodin save = this.comodinService.save(c);
+			final Nulp save = this.nulpService.save(c);
 
 			//Editamos el parámetro shortTitle del objeto y guardamos en modo final
 
@@ -73,8 +74,8 @@ public class ControlCheck extends AbstractTest {
 			save.setFinalMode(true);
 
 			//guardamos
-			this.comodinService.save(save);
-			this.comodinService.flush();
+			this.nulpService.save(save);
+			this.nulpService.flush();
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();

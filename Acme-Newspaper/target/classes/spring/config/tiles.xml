@@ -33,7 +33,7 @@
 		<value>/views/mesage/tiles.xml</value>
 		<value>/views/volume/tiles.xml</value>
 		<value>/views/folder/tiles.xml</value>
-		<value>/views/comodin/tiles.xml</value>
+		<value>/views/nulp/tiles.xml</value>
 		
 
 	</util:list>

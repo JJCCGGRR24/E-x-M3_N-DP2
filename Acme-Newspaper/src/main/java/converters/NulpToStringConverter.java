@@ -1,5 +1,5 @@
 /*
- * ComodinToStringConverter.java
+ * NulpToStringConverter.java
  * 
  * Copyright (C) 2016 Universidad de Sevilla
  * 
@@ -14,20 +14,20 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import domain.Comodin;
+import domain.Nulp;
 
 @Component
 @Transactional
-public class ComodinToStringConverter implements Converter<Comodin, String> {
+public class NulpToStringConverter implements Converter<Nulp, String> {
 
 	@Override
-	public String convert(final Comodin comodin) {
+	public String convert(final Nulp nulp) {
 		String result;
 
-		if (comodin == null)
+		if (nulp == null)
 			result = null;
 		else
-			result = String.valueOf(comodin.getId());
+			result = String.valueOf(nulp.getId());
 
 		return result;
 	}

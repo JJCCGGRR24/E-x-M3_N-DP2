@@ -20,19 +20,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
-import services.ComodinService;
 import services.NewspaperService;
+import services.NulpService;
 import controllers.AbstractController;
 import domain.Administrator;
-import domain.Comodin;
+import domain.Nulp;
 
 @Controller
-@RequestMapping("/comodin/administrator")
-public class ComodinAdministratorController extends AbstractController {
+@RequestMapping("/nulp/administrator")
+public class NulpAdministratorController extends AbstractController {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private ComodinService		comodinService;
+	private NulpService			nulpService;
 
 	@Autowired
 	private NewspaperService	newspaperService;
@@ -43,7 +43,7 @@ public class ComodinAdministratorController extends AbstractController {
 
 	// Constructors -----------------------------------------------------------
 
-	public ComodinAdministratorController() {
+	public NulpAdministratorController() {
 		super();
 	}
 
@@ -53,9 +53,9 @@ public class ComodinAdministratorController extends AbstractController {
 	public ModelAndView myList() {
 		ModelAndView result;
 		final Administrator a = (Administrator) this.loginService.getPrincipalActor();
-		result = new ModelAndView("comodin/list");
-		result.addObject("comodines", this.comodinService.getAvailable(a));
-		result.addObject("requestURI", "comodin/administrator/myList.do");
+		result = new ModelAndView("nulp/list");
+		result.addObject("nulpList", this.nulpService.getAvailable(a));
+		result.addObject("requestURI", "nulp/administrator/myList.do");
 		return result;
 	}
 	//Creating------------------------------------------------------------------------
@@ -63,30 +63,30 @@ public class ComodinAdministratorController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		final ModelAndView modelAndView;
-		final Comodin n = this.comodinService.create();
+		final Nulp n = this.nulpService.create();
 		modelAndView = this.createEditModelAndView(n);
 		return modelAndView;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int comodinId) {
+	public ModelAndView edit(@RequestParam final int nulpId) {
 		final ModelAndView modelAndView;
-		final Comodin n = this.comodinService.findOne(comodinId);
+		final Nulp n = this.nulpService.findOne(nulpId);
 		modelAndView = this.createEditModelAndView(n);
 		return modelAndView;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(Comodin c, final BindingResult binding) {
+	public ModelAndView save(Nulp c, final BindingResult binding) {
 		ModelAndView modelAndView;
 
-		c = this.comodinService.reconstruct(c, binding);
+		c = this.nulpService.reconstruct(c, binding);
 		if (binding.hasErrors())
 			modelAndView = this.createEditModelAndView(c);
 		else
 			try {
-				this.comodinService.save(c);
-				modelAndView = new ModelAndView("redirect:/comodin/administrator/myList.do");
+				this.nulpService.save(c);
+				modelAndView = new ModelAndView("redirect:/nulp/administrator/myList.do");
 
 			} catch (final Throwable e) {
 				if (e.getMessage().equals("not.principal"))
@@ -105,16 +105,16 @@ public class ComodinAdministratorController extends AbstractController {
 		return modelAndView;
 	}
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(Comodin c, final BindingResult binding) {
+	public ModelAndView delete(Nulp c, final BindingResult binding) {
 		ModelAndView modelAndView;
 
-		c = this.comodinService.reconstruct(c, binding);
+		c = this.nulpService.reconstruct(c, binding);
 		if (binding.hasErrors())
 			modelAndView = this.createEditModelAndView(c);
 		else
 			try {
-				this.comodinService.delete(c);
-				modelAndView = new ModelAndView("redirect:/comodin/administrator/myList.do");
+				this.nulpService.delete(c);
+				modelAndView = new ModelAndView("redirect:/nulp/administrator/myList.do");
 			} catch (final Throwable e) {
 				if (e.getMessage().equals("in.finalMode"))
 					modelAndView = this.createEditModelAndView(c, "in.finalMode");
@@ -126,21 +126,21 @@ public class ComodinAdministratorController extends AbstractController {
 
 	// Ancillary methods ------------------------------------------------------
 
-	protected ModelAndView createEditModelAndView(final Comodin n) {
+	protected ModelAndView createEditModelAndView(final Nulp n) {
 		ModelAndView result;
 		result = this.createEditModelAndView(n, null);
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Comodin n, final String message) {
+	protected ModelAndView createEditModelAndView(final Nulp n, final String message) {
 		ModelAndView result;
 		final Administrator admin = (Administrator) this.loginService.getPrincipalActor();
 		Assert.isTrue(n.getAdministrator().equals(admin));
-		result = new ModelAndView("comodin/edit");
-		result.addObject("comodines", this.comodinService.getAvailable(admin));
+		result = new ModelAndView("nulp/edit");
+		result.addObject("nulpList", this.nulpService.getAvailable(admin));
 		result.addObject("newspapers", this.newspaperService.getPublishedNewspapers());
-		result.addObject("comodin", n);
-		result.addObject("comodinBD", this.comodinService.findOne(n.getId()));
+		result.addObject("nulp", n);
+		result.addObject("nulpBD", this.nulpService.findOne(n.getId()));
 		result.addObject("message", message);
 		return result;
 	}

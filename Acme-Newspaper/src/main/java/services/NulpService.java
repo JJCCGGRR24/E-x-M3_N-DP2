@@ -13,56 +13,56 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.ComodinRepository;
+import repositories.NulpRepository;
 import security.LoginService;
 import domain.Administrator;
-import domain.Comodin;
 import domain.Newspaper;
+import domain.Nulp;
 
 ;
 
 @Service
 @Transactional
-public class ComodinService {
+public class NulpService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private ComodinRepository	comodinRepository;
+	private NulpRepository	nulpRepository;
 
 	@Autowired
-	private LoginService		loginService;
+	private LoginService	loginService;
 
 	@Autowired
-	private Validator			validator;
+	private Validator		validator;
 
 
 	// Supporting services ----------------------------------------------------
 
 	// Constructors -----------------------------------------------------------
-	public ComodinService() {
+	public NulpService() {
 		super();
 	}
 
 	// Simple CRUD methods ----------------------------------------------------
-	public Comodin create() {
-		final Comodin r = new Comodin();
+	public Nulp create() {
+		final Nulp r = new Nulp();
 		final Administrator admin = (Administrator) this.loginService.getPrincipalActor();
 		r.setAdministrator(admin);
 		r.setTicker(this.generateCode());
 		r.setNewspaper(null);
 		return r;
 	}
-	public Collection<Comodin> findAll() {
-		final Collection<Comodin> res = this.comodinRepository.findAll();
+	public Collection<Nulp> findAll() {
+		final Collection<Nulp> res = this.nulpRepository.findAll();
 		Assert.notNull(res);
 		return res;
 	}
 
-	public Comodin findOne(final int comodinId) {
-		return this.comodinRepository.findOne(comodinId);
+	public Nulp findOne(final int nulpId) {
+		return this.nulpRepository.findOne(nulpId);
 	}
 
-	public Comodin save(final Comodin c) {
+	public Nulp save(final Nulp c) {
 		Assert.notNull(c);
 		final Date actual = new Date();
 
@@ -71,7 +71,7 @@ public class ComodinService {
 				Assert.isTrue(c.getMoment().after(actual), "moment.before");
 			Assert.isTrue(c.getNewspaper() == null, "necessary.finalMode");
 		} else {
-			final Comodin bd = this.comodinRepository.findOne(c.getId());
+			final Nulp bd = this.nulpRepository.findOne(c.getId());
 			if (bd.isFinalMode()) {
 				Assert.isTrue(bd.getNewspaper() == null, "yet.asociated");
 				if (c.getMoment() != null)
@@ -84,21 +84,21 @@ public class ComodinService {
 				Assert.isTrue(c.getNewspaper() == null, "necessary.finalMode");
 			}
 		}
-		return this.comodinRepository.save(c);
+		return this.nulpRepository.save(c);
 	}
-	public void delete(final Comodin comodin) {
-		Assert.isTrue(comodin.isFinalMode() == false, "in.finalMode");
-		this.comodinRepository.delete(comodin);
+	public void delete(final Nulp nulp) {
+		Assert.isTrue(nulp.isFinalMode() == false, "in.finalMode");
+		this.nulpRepository.delete(nulp);
 	}
 	public void flush() {
-		this.comodinRepository.flush();
+		this.nulpRepository.flush();
 	}
 
 	// Other business methods -------------------------------------------------
 
-	public void verify(final Comodin c) {
+	public void verify(final Nulp c) {
 
-		final Comodin bd = this.comodinRepository.findOne(c.getId());
+		final Nulp bd = this.nulpRepository.findOne(c.getId());
 		Assert.isTrue(bd.getShortTitle().equals(c.getShortTitle()), "in.finalMode");
 		Assert.isTrue(bd.getDescription().equals(c.getDescription()), "in.finalMode");
 		Assert.isTrue(bd.getGauge() == (c.getGauge()), "in.finalMode");
@@ -123,7 +123,7 @@ public class ComodinService {
 			month = "0" + month;
 		final Integer yearInt = current.getYear();
 		final String year = yearInt.toString().substring(1, 3);
-		return year + month + day + ":" + ComodinService.generateStringAux();
+		return year + month + day + ":" + NulpService.generateStringAux();
 
 	}
 
@@ -137,22 +137,22 @@ public class ComodinService {
 		return new String(text);
 	}
 
-	public Collection<Comodin> getFinalModeMomentAfter(final Newspaper newspaper) {
+	public Collection<Nulp> getFinalModeMomentAfter(final Newspaper newspaper) {
 		final Date actual = new Date();
-		return this.comodinRepository.getFinalModeMomentAfter(newspaper, actual);
+		return this.nulpRepository.getFinalModeMomentAfter(newspaper, actual);
 	}
 
-	public Collection<Comodin> getAvailable(final Administrator a) {
+	public Collection<Nulp> getAvailable(final Administrator a) {
 		final Date actual = new Date();
-		final Collection<Comodin> c = this.comodinRepository.getAvailable(actual, a);
-		final Collection<Comodin> all = a.getComodines();
+		final Collection<Nulp> c = this.nulpRepository.getAvailable(actual, a);
+		final Collection<Nulp> all = a.getNulpList();
 		all.removeAll(c);
 		return all;
 	}
 
-	public Comodin reconstruct(final Comodin c, final BindingResult binding) {
-		Comodin result;
-		Comodin bd;
+	public Nulp reconstruct(final Nulp c, final BindingResult binding) {
+		Nulp result;
+		Nulp bd;
 
 		if (c.getId() == 0) {
 			c.setAdministrator((Administrator) this.loginService.getPrincipalActor());
@@ -160,7 +160,7 @@ public class ComodinService {
 			result = c;
 
 		} else {
-			bd = this.comodinRepository.findOne(c.getId());
+			bd = this.nulpRepository.findOne(c.getId());
 			c.setAdministrator(bd.getAdministrator());
 			c.setTicker(bd.getTicker());
 
