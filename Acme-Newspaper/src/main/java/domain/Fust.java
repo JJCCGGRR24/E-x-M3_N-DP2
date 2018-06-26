@@ -14,6 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -28,7 +29,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 	@Index(name = "index_finalMode", columnList = "finalMode"), @Index(name = "index_newspaper", columnList = "newspaper_id"), @Index(name = "index_administrator", columnList = "administrator_id"), @Index(name = "index_moment", columnList = "moment"),
 
 })
-public class Nulp extends DomainEntity {
+public class Fust extends DomainEntity {
 
 	//Attributes
 	private String	ticker;
@@ -41,6 +42,7 @@ public class Nulp extends DomainEntity {
 
 	@Column(unique = true)
 	@NotBlank
+	@Pattern(regexp = "^((0|1|2)\\d{1}|3[0-1]{1})\\w{2,5}-(0[1-9]{1}|1[0-2]{1})\\d{2}$")
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getTicker() {
 		return this.ticker;
@@ -71,7 +73,7 @@ public class Nulp extends DomainEntity {
 
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	@NotBlank
-	@Size(max = 255)
+	@Size(max = 100)
 	public String getShortTitle() {
 		return this.shortTitle;
 	}
@@ -81,7 +83,7 @@ public class Nulp extends DomainEntity {
 	}
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
-	@Size(max = 65000)
+	@Size(max = 250)
 	public String getDescription() {
 		return this.description;
 	}

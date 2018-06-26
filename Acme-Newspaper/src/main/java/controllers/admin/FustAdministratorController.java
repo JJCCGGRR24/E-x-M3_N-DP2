@@ -20,19 +20,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
+import services.FustService;
 import services.NewspaperService;
-import services.NulpService;
 import controllers.AbstractController;
 import domain.Administrator;
-import domain.Nulp;
+import domain.Fust;
 
 @Controller
-@RequestMapping("/nulp/administrator")
-public class NulpAdministratorController extends AbstractController {
+@RequestMapping("/fust/administrator")
+public class FustAdministratorController extends AbstractController {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private NulpService			nulpService;
+	private FustService			fustService;
 
 	@Autowired
 	private NewspaperService	newspaperService;
@@ -43,7 +43,7 @@ public class NulpAdministratorController extends AbstractController {
 
 	// Constructors -----------------------------------------------------------
 
-	public NulpAdministratorController() {
+	public FustAdministratorController() {
 		super();
 	}
 
@@ -53,9 +53,9 @@ public class NulpAdministratorController extends AbstractController {
 	public ModelAndView myList() {
 		ModelAndView result;
 		final Administrator a = (Administrator) this.loginService.getPrincipalActor();
-		result = new ModelAndView("nulp/list");
-		result.addObject("nulpList", this.nulpService.getAvailable(a));
-		result.addObject("requestURI", "nulp/administrator/myList.do");
+		result = new ModelAndView("fust/list");
+		result.addObject("fustList", this.fustService.getAvailable(a));
+		result.addObject("requestURI", "fust/administrator/myList.do");
 		return result;
 	}
 	//Creating------------------------------------------------------------------------
@@ -64,30 +64,30 @@ public class NulpAdministratorController extends AbstractController {
 	public ModelAndView create() {
 		final ModelAndView modelAndView;
 
-		final Nulp n = this.nulpService.create();
+		final Fust n = this.fustService.create();
 		modelAndView = this.createEditModelAndView(n);
 		return modelAndView;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int nulpId) {
+	public ModelAndView edit(@RequestParam final int fustId) {
 		final ModelAndView modelAndView;
-		final Nulp n = this.nulpService.findOne(nulpId);
+		final Fust n = this.fustService.findOne(fustId);
 		modelAndView = this.createEditModelAndView(n);
 		return modelAndView;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(Nulp c, final BindingResult binding) {
+	public ModelAndView save(Fust c, final BindingResult binding) {
 		ModelAndView modelAndView;
 
-		c = this.nulpService.reconstruct(c, binding);
+		c = this.fustService.reconstruct(c, binding);
 		if (binding.hasErrors())
 			modelAndView = this.createEditModelAndView(c);
 		else
 			try {
-				this.nulpService.save(c);
-				modelAndView = new ModelAndView("redirect:/nulp/administrator/myList.do");
+				this.fustService.save(c);
+				modelAndView = new ModelAndView("redirect:/fust/administrator/myList.do");
 
 			} catch (final Throwable e) {
 				if (e.getMessage().equals("not.principal"))
@@ -106,16 +106,16 @@ public class NulpAdministratorController extends AbstractController {
 		return modelAndView;
 	}
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(Nulp c, final BindingResult binding) {
+	public ModelAndView delete(Fust c, final BindingResult binding) {
 		ModelAndView modelAndView;
 
-		c = this.nulpService.reconstruct(c, binding);
+		c = this.fustService.reconstruct(c, binding);
 		if (binding.hasErrors())
 			modelAndView = this.createEditModelAndView(c);
 		else
 			try {
-				this.nulpService.delete(c);
-				modelAndView = new ModelAndView("redirect:/nulp/administrator/myList.do");
+				this.fustService.delete(c);
+				modelAndView = new ModelAndView("redirect:/fust/administrator/myList.do");
 			} catch (final Throwable e) {
 				if (e.getMessage().equals("not.principal"))
 					modelAndView = this.createEditModelAndView(c, "not.principal");
@@ -129,21 +129,21 @@ public class NulpAdministratorController extends AbstractController {
 
 	// Ancillary methods ------------------------------------------------------
 
-	protected ModelAndView createEditModelAndView(final Nulp n) {
+	protected ModelAndView createEditModelAndView(final Fust n) {
 		ModelAndView result;
 		result = this.createEditModelAndView(n, null);
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Nulp n, final String message) {
+	protected ModelAndView createEditModelAndView(final Fust n, final String message) {
 		ModelAndView result;
 		final Administrator admin = (Administrator) this.loginService.getPrincipalActor();
-		Assert.isTrue(n.getAdministrator().equals(admin), "not.isprincipal");
-		result = new ModelAndView("nulp/edit");
-		result.addObject("nulpList", this.nulpService.getAvailable(admin));
+		Assert.isTrue(n.getAdministrator().equals(admin), "not.principal");
+		result = new ModelAndView("fust/edit");
+		result.addObject("fustList", this.fustService.getAvailable(admin));
 		result.addObject("newspapers", this.newspaperService.getPublishedNewspapers());
-		result.addObject("nulp", n);
-		result.addObject("nulpBD", this.nulpService.findOne(n.getId()));
+		result.addObject("fust", n);
+		result.addObject("fustBD", this.fustService.findOne(n.getId()));
 		result.addObject("message", message);
 		return result;
 	}

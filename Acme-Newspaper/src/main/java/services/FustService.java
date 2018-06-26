@@ -13,21 +13,21 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.NulpRepository;
+import repositories.FustRepository;
 import security.LoginService;
 import domain.Administrator;
+import domain.Fust;
 import domain.Newspaper;
-import domain.Nulp;
 
 ;
 
 @Service
 @Transactional
-public class NulpService {
+public class FustService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private NulpRepository	nulpRepository;
+	private FustRepository	fustRepository;
 
 	@Autowired
 	private LoginService	loginService;
@@ -39,30 +39,30 @@ public class NulpService {
 	// Supporting services ----------------------------------------------------
 
 	// Constructors -----------------------------------------------------------
-	public NulpService() {
+	public FustService() {
 		super();
 	}
 
 	// Simple CRUD methods ----------------------------------------------------
-	public Nulp create() {
-		final Nulp r = new Nulp();
+	public Fust create() {
+		final Fust r = new Fust();
 		final Administrator admin = (Administrator) this.loginService.getPrincipalActor();
 		r.setAdministrator(admin);
 		r.setTicker(this.generateCode());
 		r.setNewspaper(null);
 		return r;
 	}
-	public Collection<Nulp> findAll() {
-		final Collection<Nulp> res = this.nulpRepository.findAll();
+	public Collection<Fust> findAll() {
+		final Collection<Fust> res = this.fustRepository.findAll();
 		Assert.notNull(res);
 		return res;
 	}
 
-	public Nulp findOne(final int nulpId) {
-		return this.nulpRepository.findOne(nulpId);
+	public Fust findOne(final int fustId) {
+		return this.fustRepository.findOne(fustId);
 	}
 
-	public Nulp save(final Nulp c) {
+	public Fust save(final Fust c) {
 		Assert.notNull(c);
 		final Administrator admin = (Administrator) this.loginService.getPrincipalActor();
 		Assert.isTrue(c.getAdministrator().equals(admin), "not.principal");
@@ -73,7 +73,7 @@ public class NulpService {
 				Assert.isTrue(c.getMoment().after(actual), "moment.before");
 			Assert.isTrue(c.getNewspaper() == null, "necessary.finalMode");
 		} else {
-			final Nulp bd = this.nulpRepository.findOne(c.getId());
+			final Fust bd = this.fustRepository.findOne(c.getId());
 			if (bd.isFinalMode()) {
 				Assert.isTrue(bd.getNewspaper() == null, "yet.asociated");
 				if (c.getMoment() != null)
@@ -86,24 +86,24 @@ public class NulpService {
 				Assert.isTrue(c.getNewspaper() == null, "necessary.finalMode");
 			}
 		}
-		return this.nulpRepository.save(c);
+		return this.fustRepository.save(c);
 	}
-	public void delete(final Nulp nulp) {
+	public void delete(final Fust fust) {
 		final Administrator admin = (Administrator) this.loginService.getPrincipalActor();
-		Assert.isTrue(nulp.getAdministrator().equals(admin), "not.principal");
-		final Nulp bd = this.nulpRepository.findOne(nulp.getId());
+		Assert.isTrue(fust.getAdministrator().equals(admin), "not.principal");
+		final Fust bd = this.fustRepository.findOne(fust.getId());
 		Assert.isTrue(bd.isFinalMode() == false, "in.finalMode");
-		this.nulpRepository.delete(nulp);
+		this.fustRepository.delete(fust);
 	}
 	public void flush() {
-		this.nulpRepository.flush();
+		this.fustRepository.flush();
 	}
 
 	// Other business methods -------------------------------------------------
 
-	public void verify(final Nulp c) {
+	public void verify(final Fust c) {
 
-		final Nulp bd = this.nulpRepository.findOne(c.getId());
+		final Fust bd = this.fustRepository.findOne(c.getId());
 		Assert.isTrue(bd.getShortTitle().equals(c.getShortTitle()), "in.finalMode");
 		Assert.isTrue(bd.getDescription().equals(c.getDescription()), "in.finalMode");
 		Assert.isTrue(bd.getGauge() == (c.getGauge()), "in.finalMode");
@@ -128,36 +128,41 @@ public class NulpService {
 			month = "0" + month;
 		final Integer yearInt = current.getYear();
 		final String year = yearInt.toString().substring(1, 3);
-		return year + month + day + ":" + NulpService.generateStringAux();
+		return day + FustService.generateStringAux() + "-" + month + year;
 
 	}
 
 	private static String generateStringAux() {
-		final int length = 6;
-		final String characters = "_0123456789abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+		int index;
+		final int random = (int) (Math.floor(Math.random() * (2 - 0)) + 0);
+		if (random != 0)
+			index = 2;
+		else
+			index = 5;
+		final int length = index;
+		final String characters = "_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		final Random rng = new Random();
 		final char[] text = new char[length];
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < index; i++)
 			text[i] = characters.charAt(rng.nextInt(characters.length()));
 		return new String(text);
 	}
-
-	public Collection<Nulp> getFinalModeMomentAfter(final Newspaper newspaper) {
+	public Collection<Fust> getFinalModeMomentAfter(final Newspaper newspaper) {
 		final Date actual = new Date();
-		return this.nulpRepository.getFinalModeMomentAfter(newspaper, actual);
+		return this.fustRepository.getFinalModeMomentAfter(newspaper, actual);
 	}
 
-	public Collection<Nulp> getAvailable(final Administrator a) {
+	public Collection<Fust> getAvailable(final Administrator a) {
 		final Date actual = new Date();
-		final Collection<Nulp> c = this.nulpRepository.getAvailable(actual, a);
-		final Collection<Nulp> all = a.getNulpList();
+		final Collection<Fust> c = this.fustRepository.getAvailable(actual, a);
+		final Collection<Fust> all = a.getFustList();
 		all.removeAll(c);
 		return all;
 	}
 
-	public Nulp reconstruct(final Nulp c, final BindingResult binding) {
-		Nulp result;
-		Nulp bd;
+	public Fust reconstruct(final Fust c, final BindingResult binding) {
+		Fust result;
+		Fust bd;
 
 		if (c.getId() == 0) {
 			c.setAdministrator((Administrator) this.loginService.getPrincipalActor());
@@ -165,7 +170,7 @@ public class NulpService {
 			result = c;
 
 		} else {
-			bd = this.nulpRepository.findOne(c.getId());
+			bd = this.fustRepository.findOne(c.getId());
 			c.setAdministrator(bd.getAdministrator());
 			c.setTicker(bd.getTicker());
 

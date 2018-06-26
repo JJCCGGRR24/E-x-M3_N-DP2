@@ -1,5 +1,5 @@
 /*
- * NulpToStringConverter.java
+ * FustToStringConverter.java
  * 
  * Copyright (C) 2016 Universidad de Sevilla
  * 
@@ -14,20 +14,20 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import domain.Nulp;
+import domain.Fust;
 
 @Component
 @Transactional
-public class NulpToStringConverter implements Converter<Nulp, String> {
+public class FustToStringConverter implements Converter<Fust, String> {
 
 	@Override
-	public String convert(final Nulp nulp) {
+	public String convert(final Fust fust) {
 		String result;
 
-		if (nulp == null)
+		if (fust == null)
 			result = null;
 		else
-			result = String.valueOf(nulp.getId());
+			result = String.valueOf(fust.getId());
 
 		return result;
 	}

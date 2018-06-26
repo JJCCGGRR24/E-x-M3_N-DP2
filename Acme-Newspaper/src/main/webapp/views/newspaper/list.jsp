@@ -114,8 +114,8 @@
 	</display:column>
 	</security:authorize>
 	
-	<display:column titleKey="newspaper.nulpList">
-		<spring:url value="/nulp/list.do" var="editURL">
+	<display:column titleKey="newspaper.fustList">
+		<spring:url value="/fust/list.do" var="editURL">
 		<spring:param name="newspaperId" value="${row.id}"></spring:param>
 		</spring:url>
 		

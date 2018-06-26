@@ -10,24 +10,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.NewspaperService;
-import services.NulpService;
+import services.FustService;
 import domain.Newspaper;
-import domain.Nulp;
+import domain.Fust;
 
 @Controller()
-@RequestMapping("/nulp")
-public class NulpController extends AbstractController {
+@RequestMapping("/fust")
+public class FustController extends AbstractController {
 
 	//Services
 	@Autowired
-	private NulpService			nulpService;
+	private FustService			fustService;
 
 	@Autowired
 	private NewspaperService	newspaperService;
 
 
 	//Constructor
-	public NulpController() {
+	public FustController() {
 		super();
 	}
 
@@ -35,11 +35,11 @@ public class NulpController extends AbstractController {
 
 	@RequestMapping("/list")
 	public ModelAndView list(@RequestParam final int newspaperId) {
-		final ModelAndView res = new ModelAndView("nulp/list");
+		final ModelAndView res = new ModelAndView("fust/list");
 		final Newspaper newspaper = this.newspaperService.findOne(newspaperId);
-		final List<Nulp> nulpList = (List<Nulp>) this.nulpService.getFinalModeMomentAfter(newspaper);
-		res.addObject("nulpList", nulpList);
-		res.addObject("requestURI", "nulp/list.do");
+		final List<Fust> fustList = (List<Fust>) this.fustService.getFinalModeMomentAfter(newspaper);
+		res.addObject("fustList", fustList);
+		res.addObject("requestURI", "fust/list.do");
 		return res;
 
 	}

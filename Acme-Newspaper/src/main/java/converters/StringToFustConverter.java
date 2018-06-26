@@ -1,5 +1,5 @@
 /*
- * StringToNulpConverter.java
+ * StringToFustConverter.java
  * 
  * Copyright (C) 2016 Universidad de Sevilla
  * 
@@ -15,25 +15,25 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import repositories.NulpRepository;
-import domain.Nulp;
+import repositories.FustRepository;
+import domain.Fust;
 
 @Component
 @Transactional
-public class StringToNulpConverter implements Converter<String, Nulp> {
+public class StringToFustConverter implements Converter<String, Fust> {
 
 	@Autowired
-	NulpRepository	nulpRepository;
+	FustRepository	fustRepository;
 
 
 	@Override
-	public Nulp convert(final String text) {
-		Nulp result;
+	public Fust convert(final String text) {
+		Fust result;
 		int id;
 
 		try {
 			id = Integer.valueOf(text);
-			result = this.nulpRepository.findOne(id);
+			result = this.fustRepository.findOne(id);
 		} catch (final Exception oops) {
 			throw new IllegalArgumentException(oops);
 		}

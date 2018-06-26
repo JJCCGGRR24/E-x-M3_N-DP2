@@ -16,14 +16,14 @@
        
 <tiles-definitions>
 	
-	<definition name="nulp/list" extends="master.page">	
-		<put-attribute name="title" value="Nulp's list" />
-		<put-attribute name="body" value="/views/nulp/list.jsp" />
+	<definition name="fust/list" extends="master.page">	
+		<put-attribute name="title" value="Fust's list" />
+		<put-attribute name="body" value="/views/fust/list.jsp" />
 	</definition> 
 	
-	 <definition name="nulp/edit" extends="master.page">	
-		<put-attribute name="title" value="Write nulp" />
-		<put-attribute name="body" value="/views/nulp/edit.jsp" />
+	 <definition name="fust/edit" extends="master.page">	
+		<put-attribute name="title" value="Write fust" />
+		<put-attribute name="body" value="/views/fust/edit.jsp" />
 	</definition> 
  
 	

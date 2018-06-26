@@ -56,8 +56,8 @@
 		<bean class="converters.TabooToStringConverter" /> 
 		<bean class="converters.UserToStringConverter" /> 
 		<bean class="converters.VolumeToStringConverter" /> 
-		<bean class="converters.NulpToStringConverter" /> 
-		<bean class="converters.StringToNulpConverter" /> 
+		<bean class="converters.FustToStringConverter" /> 
+		<bean class="converters.StringToFustConverter" /> 
 		
 		
 	</util:list>

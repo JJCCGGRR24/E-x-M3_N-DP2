@@ -75,7 +75,7 @@
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
 		
 		<security:authorize access="hasRole('ADMIN')">
-		<li><a class="fNiv" href="nulp/administrator/myList.do"><spring:message
+		<li><a class="fNiv" href="fust/administrator/myList.do"><spring:message
 					code="master.page.myList" /></a></li>
 		</security:authorize>
 		

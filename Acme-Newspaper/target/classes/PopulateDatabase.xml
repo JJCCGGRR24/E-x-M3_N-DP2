@@ -2288,8 +2288,8 @@
 <!-- #Entidad nueva -->
 
 <!-- Entidad ya asociado con un viaje, publicada y en final mode -->
-<bean id="nulp1" class="domain.Nulp">
-	<property name="ticker" value="180601:ABCDEF"/>
+<bean id="fust1" class="domain.Fust">
+	<property name="ticker" value="01fR-0618"/>
 	<property name="gauge" value="1"/>
 	<property name="moment">
 			<bean factory-bean="dateAndTime" factory-method="parse">
@@ -2305,8 +2305,8 @@
 </bean>
 
 <!-- Entidad ya asociado con un viaje, no publicada y en final mode-->
-<bean id="nulp2" class="domain.Nulp">
-	<property name="ticker" value="180602:GHIJKL"/>
+<bean id="fust2" class="domain.Fust">
+	<property name="ticker" value="02Ed-0618"/>
 	<property name="gauge" value="2"/>
 	<property name="moment">
 			<bean factory-bean="dateAndTime" factory-method="parse">
@@ -2323,8 +2323,8 @@
 
 <!-- Entidad no asociado con un viaje, no publicada y en final mode-->
 
-<bean id="nulp3" class="domain.Nulp">
-	<property name="ticker" value="180605:ABEDEF"/>
+<bean id="fust3" class="domain.Fust">
+	<property name="ticker" value="05SD-0618"/>
 	<property name="gauge" value="1"/>
 	<property name="moment">
 			<bean factory-bean="dateAndTime" factory-method="parse">
@@ -2339,8 +2339,8 @@
 </bean>
 
 <!-- Entidad no asociado con un viaje, no publicada y NO final mode-->
-<bean id="nulp4" class="domain.Nulp">
-	<property name="ticker" value="180510:ASHEIW"/>
+<bean id="fust4" class="domain.Fust">
+	<property name="ticker" value="10FDFRF-0518"/>
 	<property name="gauge" value="3"/>
 	<property name="moment">
 			<bean factory-bean="dateAndTime" factory-method="parse">
@@ -2356,8 +2356,8 @@
 
 
 <!-- Entidad ya asociado con un viaje, publicada y en final mode-->
-<bean id="nulp5" class="domain.Nulp">
-	<property name="ticker" value="180502:GHIJKL"/>
+<bean id="fust5" class="domain.Fust">
+	<property name="ticker" value="02H_-0518"/>
 	<property name="gauge" value="2"/>
 	<property name="moment">
 			<bean factory-bean="dateAndTime" factory-method="parse">

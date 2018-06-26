@@ -12,47 +12,47 @@
 
 
 <security:authorize access="hasRole('ADMIN')">
-<input type="button" name="template.create" value="<spring:message code="template.create"/>" onclick="javascript:relativeRedir('nulp/administrator/create.do')" />
+<input type="button" name="template.create" value="<spring:message code="template.create"/>" onclick="javascript:relativeRedir('fust/administrator/create.do')" />
 </security:authorize>
 
 
-<display:table name="nulpList" id="row" requestURI="${requestURI}"
+<display:table name="fustList" id="row" requestURI="${requestURI}"
 	pagesize="2" class="displaytag" sort="list" defaultsort="1" defaultorder="descending">
 
-<acme:column code="nulp.ticker" property="ticker"/>
+<acme:column code="fust.ticker" property="ticker"/>
 
 <jstl:choose>
 	<jstl:when test="${row.gauge == 1}">
-	<spring:message code="nulp.gauge" var="gaugeHeader"/>
+	<spring:message code="fust.gauge" var="gaugeHeader"/>
 	<display:column  title="${gaugeHeader}" sortable="true">
-	<div style="background: lightYellow;"> <jstl:out value="${row.gauge}"/></div>
+	<div style="background: PowderBlue;"> <jstl:out value="${row.gauge}"/></div>
 	</display:column>
 	</jstl:when>
 	
 	<jstl:when test="${row.gauge == 2}">
-	<spring:message code="nulp.gauge" var="gaugeHeader"/>
+	<spring:message code="fust.gauge" var="gaugeHeader"/>
 	<display:column  title="${gaugeHeader}" sortable="true">
-	<div style="background: Moccasin;"> <jstl:out value="${row.gauge}"/></div>
+	<div style="background: DarkSeaGreen;"> <jstl:out value="${row.gauge}"/></div>
 	</display:column>
 	</jstl:when>
 	
 	<jstl:when test="${row.gauge == 3}">
-	<spring:message code="nulp.gauge" var="gaugeHeader"/>
+	<spring:message code="fust.gauge" var="gaugeHeader"/>
 	<display:column  title="${gaugeHeader}" sortable="true">
-	<div style="background: Blue;"> <jstl:out value="${row.gauge}"/></div>
+	<div style="background: Gray;"> <jstl:out value="${row.gauge}"/></div>
 	</display:column>
 	</jstl:when>
 	</jstl:choose>
 	
 
-<acme:date2 code="nulp.moment" property="moment"/>
-<acme:column code="nulp.shortTitle" property="shortTitle"/>
-<acme:column code="nulp.description" property="description"/>
+<acme:date2 code="fust.moment" property="moment"/>
+<acme:column code="fust.shortTitle" property="shortTitle"/>
+<acme:column code="fust.description" property="description"/>
 
 <display:column>
 <security:authentication property="principal" var="userAccount"/>
-	<spring:url value="nulp/administrator/edit.do" var="editURL">
-		<spring:param name="nulpId" value="${row.id}"></spring:param>
+	<spring:url value="fust/administrator/edit.do" var="editURL">
+		<spring:param name="fustId" value="${row.id}"></spring:param>
 	</spring:url>
 	
 	<jstl:if test="${(row.administrator.userAccount eq userAccount) and (row.finalMode == false)}">	

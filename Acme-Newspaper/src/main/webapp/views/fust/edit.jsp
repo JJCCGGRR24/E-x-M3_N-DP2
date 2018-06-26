@@ -6,16 +6,16 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 	
-<form:form action="nulp/administrator/edit.do" modelAttribute="nulp">
+<form:form action="fust/administrator/edit.do" modelAttribute="fust">
 	
 <jstl:choose>	
 
-<jstl:when test="${nulpBD.finalMode eq true}" >
+<jstl:when test="${fustBD.finalMode eq true}" >
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
 	
 	<form:label path="newspaper">
-		<spring:message code="nulp.newspaper" />
+		<spring:message code="fust.newspaper" />
 	</form:label>	
 	<form:select path="newspaper" cssStyle="width:400px;"> 
 		<jstl:forEach items="${newspapers}" var="cat">
@@ -25,25 +25,25 @@
 	<form:errors path="newspaper" cssClass="error" />
 	<br /><br>
 	
-	<acme:textbox code="nulp.shortTitle" path="shortTitle" readonly="true"/><br>
-	<acme:textarea code="nulp.description" path="description" readonly="true"/><br>
-	<acme:textbox code="nulp.moment" placeholder="dd/MM/yyyy HH:mm" path="moment" readonly="true"/><br>
+	<acme:textbox code="fust.shortTitle" path="shortTitle" readonly="true"/><br>
+	<acme:textarea code="fust.description" path="description" readonly="true"/><br>
+	<acme:textbox code="fust.moment" placeholder="dd/MM/yyyy HH:mm" path="moment" readonly="true"/><br>
 	
 	<form:label path="gauge">
-		<spring:message code="nulp.gauge"/>:
+		<spring:message code="fust.gauge"/>:
 	</form:label>
-	<form:input path="gauge" type="number" max="3" min="1" value = "${nulp.gauge}" readonly="true"/>
+	<form:input path="gauge" type="number" max="3" min="1" value = "${fust.gauge}" readonly="true"/>
 	<form:errors cssClass="error" path="gauge"/>
 	<br /><br>
 	
-	<spring:message code="nulp.finalMode" var="finalModeHeader"/>
+	<spring:message code="fust.finalMode" var="finalModeHeader"/>
 	<form:checkbox  label="${finalModeHeader}" path="finalMode" onclick="javascript: return false;"/><br><br>
 	
 	
 	<input type="submit" name="save" value="<spring:message code="template.save"/>" />
 	
 	<input type="button" name="cancel" value="<spring:message code="template.cancel"/>" 
-	onclick="javascript: relativeRedir('/nulp/administrator/myList.do');"/>
+	onclick="javascript: relativeRedir('/fust/administrator/myList.do');"/>
 </jstl:when>
 
 <jstl:otherwise>
@@ -51,28 +51,28 @@
 	<form:hidden path="version"/>
 
 	
-	<acme:textbox code="nulp.shortTitle" path="shortTitle"/><br>
-	<acme:textarea code="nulp.description" path="description"/><br>
-	<acme:textbox code="nulp.moment" placeholder="dd/MM/yyyy HH:mm" path="moment"/><br>
+	<acme:textbox code="fust.shortTitle" path="shortTitle"/><br>
+	<acme:textarea code="fust.description" path="description"/><br>
+	<acme:textbox code="fust.moment" placeholder="dd/MM/yyyy HH:mm" path="moment"/><br>
 	
 	<form:label path="gauge">
-		<spring:message code="nulp.gauge"/>:
+		<spring:message code="fust.gauge"/>:
 	</form:label>
-	<form:input path="gauge" type="number" max="3" min="1" value = "${nulp.gauge}"/>
+	<form:input path="gauge" type="number" max="3" min="1" value = "${fust.gauge}"/>
 	<form:errors cssClass="error" path="gauge"/>
 	<br /><br>
 	
 	
-	<spring:message code="nulp.finalMode" var="finalModeHeader"/>
+	<spring:message code="fust.finalMode" var="finalModeHeader"/>
 	<form:checkbox  label="${finalModeHeader}" path="finalMode"/><br><br>
 
 	
 	<input type="submit" name="save" value="<spring:message code="template.save"/>" />
-	<jstl:if test="${!(nulp.id eq 0)}">
+	<jstl:if test="${!(fust.id eq 0)}">
 		<input type="submit" name="delete" value="<spring:message code="template.delete"/>" />
 	</jstl:if>
 	<input type="button" name="cancel" value="<spring:message code="template.cancel"/>" 
-	onclick="javascript: relativeRedir('/nulp/administrator/myList.do');"/>
+	onclick="javascript: relativeRedir('/fust/administrator/myList.do');"/>
 </jstl:otherwise>
 </jstl:choose>
 </form:form>

@@ -12,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import services.NulpService;
+import services.FustService;
 import utilities.AbstractTest;
-import domain.Nulp;
+import domain.Fust;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -26,7 +26,7 @@ public class ControlCheck extends AbstractTest {
 	//SUT
 
 	@Autowired
-	private NulpService	nulpService;
+	private FustService	fustService;
 
 
 	//	Administrator who writes a XXXX, saves it in draft mode, then changes it, and saves it in final mode.
@@ -56,7 +56,7 @@ public class ControlCheck extends AbstractTest {
 			//Nos logueamos como administrador
 			super.authenticate(username);
 			//Creamos el objeto
-			final Nulp c = this.nulpService.create();
+			final Fust c = this.fustService.create();
 			//Introducimos los datos
 			final SimpleDateFormat pattern = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 			final Date date = pattern.parse(moment);
@@ -66,7 +66,7 @@ public class ControlCheck extends AbstractTest {
 			c.setMoment(date);
 			c.setShortTitle(shortTitle);
 			//Guardamos en base de datos el objeto
-			final Nulp save = this.nulpService.save(c);
+			final Fust save = this.fustService.save(c);
 
 			//Editamos el parámetro shortTitle del objeto y guardamos en modo final
 
@@ -74,8 +74,8 @@ public class ControlCheck extends AbstractTest {
 			save.setFinalMode(true);
 
 			//guardamos
-			this.nulpService.save(save);
-			this.nulpService.flush();
+			this.fustService.save(save);
+			this.fustService.flush();
 
 		} catch (final Throwable oops) {
 			caught = oops.getClass();

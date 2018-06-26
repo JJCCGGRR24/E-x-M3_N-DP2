@@ -14,17 +14,17 @@ import javax.validation.Valid;
 public class Administrator extends Actor {
 
 	//Relatioships
-	private Collection<Nulp>	nulpList;
+	private Collection<Fust>	fustList;
 
 
 	@Valid
 	@OneToMany(mappedBy = "administrator")
-	public Collection<Nulp> getNulpList() {
-		return this.nulpList;
+	public Collection<Fust> getFustList() {
+		return this.fustList;
 	}
 
-	public void setNulpList(final Collection<Nulp> nulpList) {
-		this.nulpList = nulpList;
+	public void setFustList(final Collection<Fust> fustList) {
+		this.fustList = fustList;
 	}
 
 }
